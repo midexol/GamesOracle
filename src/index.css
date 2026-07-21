@@ -1729,50 +1729,61 @@ table.box td.ai {
 }
 
 @media (max-width: 600px) {
+  /* Compact mobile datebar with top-right wallet button */
   .datebar {
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 12px;
-    text-align: center;
-    font-size: 10px;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 6px 12px !important;
+    font-size: 9px !important;
   }
 
-  /* Page margins and spacing */
-  .wrap {
-    padding: 0 16px;
-  }
-  
-  .article {
-    padding: 16px 12px 32px;
-  }
-  
-  h2.headline {
-    font-size: 24px;
+  .center-edition, .page-right-desc, .kicker, .tagline, nav.subnav a .sub {
+    display: none !important;
   }
 
-  h1.display {
-    font-size: 30px !important;
+  /* Compact top masthead on mobile */
+  .masthead, .masthead.center-mode {
+    padding: 8px 12px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    text-align: left !important;
   }
 
-  .masthead {
-    padding: 14px 16px;
-    flex-direction: column;
-    gap: 12px;
-    align-items: stretch;
-    text-align: center;
+  .masthead h1, .masthead.center-mode h1 {
+    font-size: 18px !important;
+    margin: 0 !important;
+    line-height: 1 !important;
   }
 
-  .masthead.center-mode {
-    padding: 20px 16px 14px;
+  /* Compact button styling on mobile top-right */
+  .wallet-btn {
+    padding: 4px 8px !important;
+    font-size: 9px !important;
+    min-height: unset !important;
+    width: auto !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .how-it-works-btn {
+    padding: 4px 8px !important;
+    font-size: 9px !important;
+    min-height: unset !important;
+    width: auto !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
   }
 
   /* Horizontal swipeable sub-navigation */
   nav.subnav {
-    gap: 14px;
+    gap: 12px;
     overflow-x: auto;
     width: 100%;
-    padding-bottom: 6px;
+    padding: 4px 0;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     justify-content: flex-start;
@@ -1783,63 +1794,86 @@ table.box td.ai {
   nav.subnav a {
     white-space: nowrap;
     flex-shrink: 0;
+    padding-bottom: 2px;
   }
 
   nav.subnav a .title {
-    font-size: 12px;
+    font-size: 11px;
   }
 
-  nav.subnav a .sub {
-    font-size: 9px;
-  }
-
-  /* Button rows in mobile headers */
-  .wallet-btn, .how-it-works-btn {
-    width: 100%;
-    margin: 4px 0 0 0 !important;
-    text-align: center;
-    justify-content: center;
-    min-height: 42px;
+  /* Page margins and spacing */
+  .wrap {
+    padding: 0 12px;
   }
   
+  .article {
+    padding: 16px 12px 32px;
+  }
+  
+  h2.headline {
+    font-size: 22px;
+  }
+
+  .col-head h2 {
+    font-size: 18px;
+  }
+
   /* Steps single column on small screens */
   .steps {
     grid-template-columns: 1fr !important;
-    row-gap: 20px;
+    row-gap: 16px;
   }
 
-  /* Edge-to-edge touch-scrollable tables */
-  .table-responsive {
-    margin: 0 -16px !important;
-    width: calc(100% + 32px) !important;
-    padding: 0 16px;
-    box-sizing: border-box;
-    -webkit-overflow-scrolling: touch;
+  /* Markets directory mobile card formatting */
+  .markets-container {
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
   }
 
-  table.ledger, table.markets {
-    font-size: 12px;
+  table.markets thead {
+    display: none !important;
   }
 
-  table.ledger th, table.ledger td, table.markets th, table.markets td {
-    padding: 8px 6px;
+  table.markets, table.markets tbody, table.markets tr, table.markets td {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  /* Coupon and staking adjustments */
-  .coupon {
-    padding: 16px 12px;
+  table.markets tr {
+    border: 1px solid var(--ink) !important;
+    border-left: 4px solid var(--purple) !important;
+    padding: 12px 14px !important;
+    margin-bottom: 12px !important;
+    background: var(--paper-2) !important;
+    box-shadow: 2px 2px 0 0 var(--ink) !important;
   }
 
-  .stake-row button {
-    padding: 10px 4px;
-    font-size: 11px;
-    min-height: 42px;
+  table.markets td {
+    padding: 2px 0 !important;
+    border: none !important;
   }
 
-  .side-btn {
-    font-size: 11px;
-    padding: 12px 8px;
-    min-height: 44px;
+  table.markets td.tag {
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+    color: var(--purple) !important;
+    font-weight: 700 !important;
+    display: inline-block !important;
+  }
+
+  table.markets td.question {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    margin: 4px 0 8px !important;
+    line-height: 1.35 !important;
+    font-family: 'Source Serif 4', serif !important;
+    color: var(--ink) !important;
+  }
+
+  .rail-dual {
+    margin: 6px 0 !important;
   }
 
   /* Modal cards mobile sizing */
@@ -1848,18 +1882,18 @@ table.box td.ai {
   }
 
   .modal-card {
-    padding: 20px 16px;
+    padding: 18px 14px;
     max-height: 85vh;
   }
 
   /* Side cards and whitepaper code blocks */
   .side-card {
-    padding: 16px 12px;
+    padding: 14px 12px;
   }
 
   pre.mono {
-    font-size: 10.5px !important;
-    padding: 10px !important;
+    font-size: 10px !important;
+    padding: 8px !important;
   }
 }
 

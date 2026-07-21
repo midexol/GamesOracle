@@ -57,19 +57,24 @@ export default function Header({
       <div className="datebar">
         <span>GLASGOW EDITION · {formattedDate}</span>
         <span className="center-edition">GLASGOW 2026 SPECIAL RELEASE</span>
-        <span className="fees-counter">
-          {activeTab === 'ledger' ? (
-            <span>VERIFIED ON-CHAIN</span>
-          ) : (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-              <Zap size={9} style={{ color: 'var(--purple)' }} />
-              <span style={{ color: 'var(--purple)', fontWeight: 600 }}>
-                {platformFees.toFixed(2)} USDT
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span className="fees-counter">
+            {activeTab === 'ledger' ? (
+              <span>VERIFIED ON-CHAIN</span>
+            ) : (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                <Zap size={9} style={{ color: 'var(--purple)' }} />
+                <span style={{ color: 'var(--purple)', fontWeight: 600 }}>
+                  {platformFees.toFixed(2)} USDT
+                </span>
               </span>
-            </span>
-          )}
-          <span>{pageRight[activeTab]}</span>
-        </span>
+            )}
+            <span className="page-right-desc">{pageRight[activeTab]}</span>
+          </span>
+          <button className="wallet-btn hard-shadow-sm" onClick={onConnectWallet}>
+            {walletConnected ? `⬡ ${walletAddress}` : '⬡ Connect OKX Wallet'}
+          </button>
+        </div>
       </div>
 
       {/* ── Masthead ─────────────────────────────────────── */}
@@ -162,14 +167,6 @@ export default function Header({
               <span className="sub">Developer tools</span>
             </a>
           </nav>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-            <button className="how-it-works-btn hard-shadow-sm" onClick={onOpenHowItWorks}>
-              How It Works
-            </button>
-            <button className="wallet-btn hard-shadow-sm" onClick={onConnectWallet}>
-              {walletConnected ? `⬡ ${walletAddress}` : '⬡ Connect OKX Wallet'}
-            </button>
-          </div>
         </div>
       )}
     </header>
