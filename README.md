@@ -1,10 +1,10 @@
-# GamesOracle AI 🏛️
+# GamesOracle AI
 ### An AI Prediction-Market Oracle Agent for the Glasgow 2026 Commonwealth Games
 *Submitted to the OKX.AI Genesis Hackathon (Agent Service Provider track)*
 
 ---
 
-## 📌 Executive Summary
+## Executive Summary
 
 **GamesOracle AI** is an Agent Service Provider (ASP) that turns the Glasgow 2026 Commonwealth Games schedule into structured, confidence-scored prediction markets. 
 
@@ -14,7 +14,7 @@ This repository hosts the **React Frontend Application**, bundled using **Parcel
 
 ---
 
-## 🎨 Design & Aesthetics: "The Commonwealth Wire"
+## Design & Aesthetics: "The Commonwealth Wire"
 
 GamesOracle AI is styled like a classic **newspaper broadsheet**, merging vintage editorial design with modern predictive analytics:
 * **Palette**: 
@@ -31,7 +31,7 @@ GamesOracle AI is styled like a classic **newspaper broadsheet**, merging vintag
 
 ---
 
-## ⚡ Interactive Frontend Features
+## Interactive Frontend Features
 
 The React application implements the following dynamic flows:
 
@@ -49,7 +49,7 @@ The React application implements the following dynamic flows:
 
 ---
 
-## 📐 System Architecture
+## System Architecture
 
 ```mermaid
 graph TD
@@ -64,7 +64,7 @@ graph TD
 
 ---
 
-## 📜 Smart Contract Sketch (X Layer Escrow)
+## Smart Contract Sketch (X Layer Escrow)
 
 The settlement layer uses a minimal escrow model on the EVM-compatible **X Layer**. A Solidity sketch of the contract managing lockups, resolution, and payouts is detailed below:
 
@@ -134,7 +134,7 @@ contract GamesOracleEscrow is ReentrancyGuard {
 
 ---
 
-## 🛠️ Getting Started (Local Development)
+## Getting Started (Local Development)
 
 To run the React application locally:
 
@@ -163,7 +163,7 @@ This outputs optimized, static assets into the `dist/` directory.
 
 ---
 
-## 🚀 ASP Registration Interface (Standardized Tools)
+## ASP Registration Interface (Standardized Tools)
 
 For OKX.AI integration, GamesOracle registers as an **Agent-to-MCP** service exposing the following standard endpoints:
 * `get_markets(sport?, day?, status?)` -> Returns list of active and resolved prediction pools.
