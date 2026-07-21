@@ -115,6 +115,10 @@ export default function BettingCoupon({ market, onAddPosition }: BettingCouponPr
         {isLoading ? 'Filing…' : `▼ Back NO / Field — ${selectedStake} USDT`}
       </motion.button>
 
+      <div className="coupon-payout-explainer">
+        Locked in escrow. If your side wins, you're paid automatically in USDT straight to your connected wallet when the result is confirmed — no claim step required.
+      </div>
+
       {/* Result / status area */}
       <AnimatePresence mode="wait">
         {betResult ? (

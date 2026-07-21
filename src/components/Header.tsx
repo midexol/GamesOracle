@@ -9,6 +9,7 @@ interface HeaderProps {
   onConnectWallet:  () => void;
   walletAddress:    string;
   platformFees:     number;
+  onOpenHowItWorks: () => void;
 }
 
 export default function Header({
@@ -18,6 +19,7 @@ export default function Header({
   onConnectWallet,
   walletAddress,
   platformFees,
+  onOpenHowItWorks,
 }: HeaderProps): React.ReactElement {
   const formattedDate = new Date()
     .toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })
@@ -26,7 +28,7 @@ export default function Header({
   const isLanding = activeTab === 'landing';
 
   const pageLabel: Record<AppTab, string> = {
-    landing:    'FRONT PAGE',
+    landing:    'HOME',
     markets:    'MARKETS COLUMN',
     dispatch:   'DISPATCH',
     ledger:     'THE LEDGER',
@@ -51,20 +53,15 @@ export default function Header({
 
   return (
     <>
-      {/* ── Datebar ─────────────────────────────────────── */}
+      {/* ── Datebar / Utility Top Bar ────────────────────── */}
       <div className="datebar">
-        <span>Glasgow Edition · Vol. I, No. 1</span>
-        <span>
-          {isLanding ? formattedDate : (
-            <>
-              <span className="live-dot" />
-              {pageLabel[activeTab]}
-            </>
-          )}
-        </span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {!isLanding && (
-            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <span>GLASGOW EDITION · {formattedDate}</span>
+        <span className="center-edition">GLASGOW 2026 SPECIAL RELEASE</span>
+        <span className="fees-counter">
+          {activeTab === 'ledger' ? (
+            <span>VERIFIED ON-CHAIN</span>
+          ) : (
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
               <Zap size={9} style={{ color: 'var(--purple)' }} />
               <span style={{ color: 'var(--purple)', fontWeight: 600 }}>
                 {platformFees.toFixed(2)} USDT
@@ -85,13 +82,37 @@ export default function Header({
           <h1 className="display">GAMESORACLE</h1>
           <div className="tagline">"An AI oracle, priced and printed for every medal in Glasgow."</div>
           <nav className="subnav">
-            <a onClick={() => onNavigate('markets')} className="live">Markets</a>
-            <a onClick={() => onNavigate('schedule')}>Schedule</a>
-            <a onClick={() => onNavigate('verdicts')}>Verdicts</a>
-            <a onClick={() => onNavigate('ledger')}>Ledger</a>
-            <a onClick={() => onNavigate('accuracy')}>Accuracy</a>
-            <a onClick={() => onNavigate('whitepaper')}>Whitepaper</a>
-            <a onClick={() => onNavigate('api')}>API</a>
+            <a onClick={() => onNavigate('markets')} className="live">
+              <span className="title">Markets</span>
+              <span className="sub">Browse & bet</span>
+            </a>
+            <a onClick={() => onNavigate('schedule')}>
+              <span className="title">Schedule</span>
+              <span className="sub">Games calendar</span>
+            </a>
+            <a onClick={() => onNavigate('verdicts')}>
+              <span className="title">Verdicts</span>
+              <span className="sub">Settled payouts</span>
+            </a>
+            <a onClick={() => onNavigate('ledger')}>
+              <span className="title">Ledger</span>
+              <span className="sub">Your bets</span>
+            </a>
+            <a onClick={() => onNavigate('accuracy')}>
+              <span className="title">Accuracy</span>
+              <span className="sub">Calibration</span>
+            </a>
+            <a onClick={() => onNavigate('whitepaper')}>
+              <span className="title">Whitepaper</span>
+              <span className="sub">Tech draft</span>
+            </a>
+            <a onClick={() => onNavigate('api')}>
+              <span className="title">API Docs</span>
+              <span className="sub">Developer tools</span>
+            </a>
+            <button className="how-it-works-btn hard-shadow-sm" style={{ padding: '6px 12px', fontSize: '10px', height: 'fit-content', alignSelf: 'center', marginLeft: '12px', marginRight: 0 }} onClick={onOpenHowItWorks}>
+              How It Works
+            </button>
           </nav>
         </div>
       ) : (
@@ -108,18 +129,47 @@ export default function Header({
             </div>
           </div>
           <nav className="subnav">
-            <a onClick={() => onNavigate('landing')}>Front Page</a>
-            <a onClick={() => onNavigate('markets')}    className={activeTab === 'markets'    ? 'active' : ''}>Markets</a>
-            <a onClick={() => onNavigate('schedule')}   className={activeTab === 'schedule'   ? 'active' : ''}>Schedule</a>
-            <a onClick={() => onNavigate('verdicts')}   className={activeTab === 'verdicts'   ? 'active' : ''}>Verdicts</a>
-            <a onClick={() => onNavigate('ledger')}     className={activeTab === 'ledger'     ? 'active' : ''}>Ledger</a>
-            <a onClick={() => onNavigate('accuracy')}   className={activeTab === 'accuracy'   ? 'active' : ''}>Accuracy</a>
-            <a onClick={() => onNavigate('whitepaper')} className={activeTab === 'whitepaper' ? 'active' : ''}>Whitepaper</a>
-            <a onClick={() => onNavigate('api')}        className={activeTab === 'api'        ? 'active' : ''}>API</a>
+            <a onClick={() => onNavigate('landing')} className={activeTab === 'landing' ? 'active' : ''}>
+              <span className="title">Home</span>
+              <span className="sub">About project</span>
+            </a>
+            <a onClick={() => onNavigate('markets')}    className={activeTab === 'markets'    ? 'active' : ''}>
+              <span className="title">Markets</span>
+              <span className="sub">Browse & bet</span>
+            </a>
+            <a onClick={() => onNavigate('schedule')}   className={activeTab === 'schedule'   ? 'active' : ''}>
+              <span className="title">Schedule</span>
+              <span className="sub">Games calendar</span>
+            </a>
+            <a onClick={() => onNavigate('verdicts')}   className={activeTab === 'verdicts'   ? 'active' : ''}>
+              <span className="title">Verdicts</span>
+              <span className="sub">Settled payouts</span>
+            </a>
+            <a onClick={() => onNavigate('ledger')}     className={activeTab === 'ledger'     ? 'active' : ''}>
+              <span className="title">Ledger</span>
+              <span className="sub">Your bets</span>
+            </a>
+            <a onClick={() => onNavigate('accuracy')}   className={activeTab === 'accuracy'   ? 'active' : ''}>
+              <span className="title">Accuracy</span>
+              <span className="sub">Calibration</span>
+            </a>
+            <a onClick={() => onNavigate('whitepaper')} className={activeTab === 'whitepaper' ? 'active' : ''}>
+              <span className="title">Whitepaper</span>
+              <span className="sub">Tech draft</span>
+            </a>
+            <a onClick={() => onNavigate('api')}        className={activeTab === 'api'        ? 'active' : ''}>
+              <span className="title">API Docs</span>
+              <span className="sub">Developer tools</span>
+            </a>
           </nav>
-          <button className="wallet-btn hard-shadow-sm" onClick={onConnectWallet}>
-            {walletConnected ? `⬡ ${walletAddress}` : '⬡ Connect OKX Wallet'}
-          </button>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <button className="how-it-works-btn hard-shadow-sm" onClick={onOpenHowItWorks}>
+              How It Works
+            </button>
+            <button className="wallet-btn hard-shadow-sm" onClick={onConnectWallet}>
+              {walletConnected ? `⬡ ${walletAddress}` : '⬡ Connect OKX Wallet'}
+            </button>
+          </div>
         </div>
       )}
     </>

@@ -92,6 +92,21 @@ export default function Ledger({ ledger, platformFees }: LedgerProps): React.Rea
           </div>
         </div>
       </div>
+      {/* ── Explainer Strip ──────────────────────────────── */}
+      <div className="ledger-explainer-strip">
+        <div className="ledger-explainer-item">
+          <h5><span>◈</span> Open</h5>
+          <p>Your stake is locked inside the X Layer escrow contract. Staking pools await final event confirmation.</p>
+        </div>
+        <div className="ledger-explainer-item">
+          <h5><span style={{ color: 'var(--green)' }}>◈</span> Won</h5>
+          <p>Payout (winning share + your stake) has been sent automatically to your connected wallet. No claim forms required.</p>
+        </div>
+        <div className="ledger-explainer-item">
+          <h5><span style={{ color: 'var(--red)' }}>◈</span> Lost</h5>
+          <p>Your stake has been distributed to the winning pool as payouts (no house cuts, peer-to-peer liquidity).</p>
+        </div>
+      </div>
 
       {/* ── Open Positions ───────────────────────────────── */}
       <div className="col-head">

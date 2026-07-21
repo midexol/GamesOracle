@@ -46,6 +46,7 @@ export default function App(): React.ReactElement {
   const [selectedMarket,  setSelectedMarket]  = useState<Market | null>(null);
   const [markets,         setMarkets]         = useState<Market[]>(INITIAL_MARKETS);
   const [ledger,          setLedger]          = useState<LedgerPosition[]>(INITIAL_LEDGER);
+  const [showHowItWorks,  setShowHowItWorks]  = useState(false);
 
   // Live fee accumulation
   useEffect(() => {
@@ -79,6 +80,31 @@ export default function App(): React.ReactElement {
     setMarkets(prev => [newMarket, ...prev]);
   };
 
+  const getOrientationText = () => {
+    switch (activeTab) {
+      case 'landing':
+        return <>Welcome to GamesOracle AI. Browse live prediction markets or read our agent listing — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+      case 'markets':
+        return <>You're browsing live markets. Pick one to see the reasoning and place a bet — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+      case 'dispatch':
+        return <>Detailed analysis for this market. Verify the signals or stake directly — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+      case 'ledger':
+        return <>Your active positions and resolved payout history. Verified on-chain — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+      case 'schedule':
+        return <>Browse the official Glasgow 2026 Games schedule or request new markets — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+      case 'verdicts':
+        return <>Official results and AI post-mortem explanations for resolved prediction markets — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+      case 'accuracy':
+        return <>Statistical audit of GamesOracle forecast calibration and performance — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+      case 'whitepaper':
+        return <>Technical specifications and architecture details for GamesOracle AI — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+      case 'api':
+        return <>Model Context Protocol schema definitions and integration documentation — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+      default:
+        return <>An autonomous AI Oracle Agent for Sports Prediction Markets — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+    }
+  };
+
   const walletAddress = '0x4F…9aC1';
 
   return (
@@ -91,7 +117,12 @@ export default function App(): React.ReactElement {
         onConnectWallet={() => setWalletConnected(c => !c)}
         walletAddress={walletAddress}
         platformFees={platformFees}
+        onOpenHowItWorks={() => setShowHowItWorks(true)}
       />
+
+      <div className="orientation-strip">
+        {getOrientationText()}
+      </div>
 
       {/* ── Page content with AnimatePresence ───────────── */}
       <AnimatePresence mode="wait">
@@ -150,6 +181,91 @@ export default function App(): React.ReactElement {
 
           {activeTab === 'api' && <ApiDocs />}
         </motion.div>
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showHowItWorks && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowHowItWorks(false)}
+          >
+            <motion.div
+              className="modal-card"
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="modal-close" onClick={() => setShowHowItWorks(false)}>
+                ✕
+              </button>
+
+              <h2 className="display" style={{ margin: '0 0 16px', fontSize: '28px', borderBottom: '2px solid var(--ink)', paddingBottom: '8px' }}>
+                How Payouts Work
+              </h2>
+
+              <div style={{ fontSize: '13.5px', lineHeight: '1.6', color: 'var(--ink)' }}>
+                <p style={{ margin: '0 0 16px', fontStyle: 'italic', fontSize: '14.5px' }}>
+                  GamesOracle is a fully decentralized sports prediction oracle. All operations are autonomous, peer-to-peer, and resolved entirely on-chain on X Layer.
+                </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', margin: '20px 0' }}>
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <div className="mono" style={{ background: 'var(--ink)', color: 'var(--paper)', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, flexShrink: 0 }}>1</div>
+                    <div>
+                      <strong className="mono" style={{ fontSize: '12px', textTransform: 'uppercase' }}>AI Analysis & Pricing</strong>
+                      <p style={{ margin: '4px 0 0' }}>Browse any market's AI probability and reasoning. Competitor history, form metrics, and real-time feeds are ingested and weighted by the agent.</p>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <div className="mono" style={{ background: 'var(--ink)', color: 'var(--paper)', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, flexShrink: 0 }}>2</div>
+                    <div>
+                      <strong className="mono" style={{ fontSize: '12px', textTransform: 'uppercase' }}>USDT Escrow Lockup</strong>
+                      <p style={{ margin: '4px 0 0' }}>Staking on YES/NO locks your USDT inside the X Layer escrow contract. Staked funds are held secure. Neither the agent nor any "house" has access to your capital.</p>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <div className="mono" style={{ background: 'var(--ink)', color: 'var(--paper)', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, flexShrink: 0 }}>3</div>
+                    <div>
+                      <strong className="mono" style={{ fontSize: '12px', textTransform: 'uppercase' }}>Autonomous Resolution</strong>
+                      <p style={{ margin: '4px 0 0' }}>The moment the official Commonwealth Games results are posted, the oracle agent processes the feed and triggers resolution directly on the contract.</p>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <div className="mono" style={{ background: 'var(--ink)', color: 'var(--paper)', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, flexShrink: 0 }}>4</div>
+                    <div>
+                      <strong className="mono" style={{ fontSize: '12px', textTransform: 'uppercase' }}>Instant Wallet Settlement</strong>
+                      <p style={{ margin: '4px 0 0' }}>The contract divides the losing pool among the winners, deducts a 2% fee, and sends the USDT directly to your connected wallet. No claim forms, no waiting.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <hr style={{ border: 'none', borderTop: '1px dashed var(--rule)', margin: '18px 0' }} />
+
+                <h4 className="mono" style={{ margin: '0 0 8px', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Platform Map (What each page does)
+                </h4>
+                <ul className="mono" style={{ paddingLeft: '18px', margin: 0, fontSize: '11.5px', color: 'var(--muted)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <li><strong>Home:</strong> General overview and hackathon objectives.</li>
+                  <li><strong>Markets:</strong> Directory of active sports prediction categories.</li>
+                  <li><strong>Dispatch:</strong> Detailed individual market view with full AI analysis & bet slip.</li>
+                  <li><strong>Ledger:</strong> Your active positions and resolved history.</li>
+                  <li><strong>Schedule:</strong> Full Games calendar where you can request the AI to draft new markets.</li>
+                  <li><strong>Verdicts:</strong> Archive of resolved predictions and post-mortems explaining AI hits/misses.</li>
+                  <li><strong>Accuracy:</strong> Live statistics tracking prediction Brier score and calibration.</li>
+                  <li><strong>API:</strong> Model Context Protocol (MCP) tool schema definitions for A2A integrations.</li>
+                </ul>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {/* ── Footer ──────────────────────────────────────── */}
