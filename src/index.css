@@ -82,15 +82,20 @@ html {
     url("./assets/fiber-paper.jpg");
   background-repeat: repeat;
   background-size: 350px;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
+  padding: 0;
   background: transparent;
   color: var(--ink);
   font-family: 'Source Serif 4', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .display {
@@ -110,6 +115,8 @@ a {
   max-width: 1180px;
   margin: 0 auto;
   padding: 0 32px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Sticky Header Container */
@@ -1719,7 +1726,8 @@ table.box td.ai {
 }
 
 .table-responsive table {
-  min-width: 500px;
+  width: 100%;
+  max-width: 100%;
 }
 
 @media (max-width: 600px) {
@@ -1806,6 +1814,13 @@ table.box td.ai {
   
   h2.headline {
     font-size: 22px;
+  }
+
+  .col-head {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    padding: 14px 0 10px !important;
   }
 
   .col-head h2 {
