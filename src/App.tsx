@@ -83,25 +83,25 @@ export default function App(): React.ReactElement {
   const getOrientationText = () => {
     switch (activeTab) {
       case 'landing':
-        return <>Welcome to GamesOracle AI. Browse live prediction markets or read our agent listing — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>Welcome to GamesOracle AI. Browse live prediction markets or read our agent listing — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'markets':
-        return <>You're browsing live markets. Pick one to see the reasoning and place a bet — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>You're browsing live markets. Pick one to see the reasoning and place a bet — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'dispatch':
-        return <>Detailed analysis for this market. Verify the signals or stake directly — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>Detailed analysis for this market. Verify the signals or stake directly — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'ledger':
-        return <>Your active positions and resolved payout history. Verified on-chain — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>Your active positions and resolved payout history. Verified on-chain — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'schedule':
-        return <>Browse the official Glasgow 2026 Games schedule or request new markets — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>Browse the official Glasgow 2026 Games schedule or request new markets — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'verdicts':
-        return <>Official results and AI post-mortem explanations for resolved prediction markets — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>Official results and AI post-mortem explanations for resolved prediction markets — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'accuracy':
-        return <>Statistical audit of GamesOracle forecast calibration and performance — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>Statistical audit of GamesOracle forecast calibration and performance — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'whitepaper':
-        return <>Technical specifications and architecture details for GamesOracle AI — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>Technical specifications and architecture details for GamesOracle AI — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'api':
-        return <>Model Context Protocol schema definitions and integration documentation — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>Model Context Protocol schema definitions and integration documentation — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       default:
-        return <>An autonomous AI Oracle Agent for Sports Prediction Markets — or <a onClick={() => setShowHowItWorks(true)}>see how payouts work</a>.</>;
+        return <>An autonomous AI Oracle Agent for Sports Prediction Markets — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
     }
   };
 
