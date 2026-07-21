@@ -8,17 +8,6 @@ interface DirectoryTableProps {
   onMarketClick: (market: Market) => void;
 }
 
-// Sport emoji/badge map
-const SPORT_EMOJI: Record<string, string> = {
-  Athletics:    '🏃',
-  Swimming:     '🏊',
-  Boxing:       '🥊',
-  Cycling:      '🚴',
-  Netball:      '🏐',
-  Weightlifting:'🏋️',
-  Special:      '⭐',
-};
-
 const tableContainerVariants: Variants = {
   hidden:  {},
   visible: { transition: { staggerChildren: 0.055 } },
@@ -26,7 +15,7 @@ const tableContainerVariants: Variants = {
 
 const rowVariants: Variants = {
   hidden:  { opacity: 0, x: 14 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.26, ease: [0.4,0,0.2,1] as [number,number,number,number] } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.26, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] } },
 };
 
 interface DualRailProps {
@@ -96,7 +85,6 @@ export default function DirectoryTable({
         <table className="markets">
           <thead>
             <tr>
-              <th style={{ width: 32 }}></th>
               <th>Sport</th>
               <th>Market</th>
               <th style={{ minWidth: 170 }}>AI vs. Line</th>
@@ -112,7 +100,7 @@ export default function DirectoryTable({
           >
             {markets.length === 0 ? (
               <tr>
-                <td colSpan={7} style={{ textAlign: 'center', padding: '24px 0', color: 'var(--muted)' }}>
+                <td colSpan={6} style={{ textAlign: 'center', padding: '24px 0', color: 'var(--muted)' }}>
                   No open markets in this section.
                 </td>
               </tr>
@@ -131,9 +119,6 @@ export default function DirectoryTable({
                     whileHover={{ backgroundColor: 'var(--paper-2)' }}
                     style={{ cursor: 'pointer' }}
                   >
-                    <td style={{ fontSize: '16px', paddingRight: 0 }}>
-                      {SPORT_EMOJI[m.sport] ?? '📊'}
-                    </td>
                     <td className="tag">{m.sport}</td>
                     <td className="question">
                       {m.title}
