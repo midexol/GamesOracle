@@ -52,7 +52,7 @@ export default function Header({
   };
 
   return (
-    <>
+    <header className="sticky-header">
       {/* ── Datebar / Utility Top Bar ────────────────────── */}
       <div className="datebar">
         <span>GLASGOW EDITION · {formattedDate}</span>
@@ -172,6 +172,6 @@ export default function Header({
           </div>
         </div>
       )}
-    </>
+    </header>
   );
 }
