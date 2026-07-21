@@ -1,7 +1,7 @@
 {
   "name": "gamesoracle-ai",
   "version": "1.0.0",
-  "description": "An AI oracle, priced and printed for every medal in Glasgow",
+  "description": "An AI Prediction-Market Oracle Agent for the Glasgow 2026 Commonwealth Games on X Layer",
   "source": "index.html",
   "scripts": {
     "start": "parcel index.html",
