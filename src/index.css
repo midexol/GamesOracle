@@ -1725,12 +1725,16 @@ table.box td.ai {
   margin-bottom: 20px;
 }
 
-.table-responsive table {
-  width: 100%;
-  max-width: 100%;
+/* Markets View Mode Toggles (Desktop default) */
+.mobile-markets-view {
+  display: none !important;
 }
 
-@media (max-width: 600px) {
+.desktop-markets-view {
+  display: block !important;
+}
+
+@media (max-width: 900px) {
   /* Compact mobile datebar with top-right wallet button */
   .datebar {
     flex-direction: row !important;
@@ -1831,23 +1835,6 @@ table.box td.ai {
   .steps {
     grid-template-columns: 1fr !important;
     row-gap: 16px;
-  }
-
-/* Markets View Mode Toggles (Desktop default) */
-.mobile-markets-view {
-  display: none !important;
-}
-
-.desktop-markets-view {
-  display: block !important;
-}
-
-@media (max-width: 600px) {
-  /* Markets directory mobile card formatting */
-  .markets-container {
-    box-shadow: none !important;
-    border: none !important;
-    background: transparent !important;
   }
 
   .desktop-markets-view {
