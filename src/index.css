@@ -1833,6 +1833,16 @@ table.box td.ai {
     row-gap: 16px;
   }
 
+/* Markets View Mode Toggles (Desktop default) */
+.mobile-markets-view {
+  display: none !important;
+}
+
+.desktop-markets-view {
+  display: block !important;
+}
+
+@media (max-width: 600px) {
   /* Markets directory mobile card formatting */
   .markets-container {
     box-shadow: none !important;
