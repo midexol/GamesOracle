@@ -129,13 +129,13 @@ header.sticky-header {
 .datebar {
   border-bottom: 1px solid var(--ink);
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 10.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
   display: flex;
   justify-content: space-between;
-  padding: 8px 32px;
+  padding: 5px 32px;
 }
 
 /* Masthead styling */
@@ -143,47 +143,41 @@ header.sticky-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 32px;
+  padding: 10px 32px;
   border-bottom: 3px solid var(--ink);
 }
 
 .masthead.center-mode {
   display: block;
   text-align: center;
-  padding: 34px 32px 22px;
+  padding: 12px 32px 8px;
 }
 
 .masthead h1 {
-  font-size: 34px;
+  font-size: 26px;
   margin: 0;
   font-weight: 900;
 }
 
 .masthead.center-mode h1 {
-  font-size: 64px;
-  letter-spacing: -1px;
+  font-size: 34px;
+  letter-spacing: -0.5px;
 }
 
 .masthead .kicker {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 10px;
-  font-weight: 600;
+  display: none !important;
 }
 
 .masthead .tagline {
   font-style: italic;
   color: var(--muted);
-  font-size: 15px;
-  margin-top: 8px;
+  font-size: 13px;
+  margin-top: 2px;
 }
 
 nav.subnav {
   display: flex;
-  gap: 30px;
+  gap: 24px;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
   text-transform: uppercase;
@@ -192,9 +186,9 @@ nav.subnav {
 
 .masthead.center-mode nav.subnav {
   justify-content: center;
-  gap: 36px;
-  padding: 12px;
-  margin-top: 14px;
+  gap: 28px;
+  padding: 4px;
+  margin-top: 8px;
   border-bottom: none;
 }
 
