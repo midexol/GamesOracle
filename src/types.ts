@@ -30,4 +30,27 @@ export interface ChatMessage {
   text:   string;
 }
 
-export type AppTab = 'landing' | 'markets' | 'dispatch' | 'ledger' | 'whitepaper';
+export type AppTab = 'landing' | 'markets' | 'dispatch' | 'ledger' | 'whitepaper' | 'schedule' | 'verdicts' | 'accuracy' | 'api';
+
+export interface ScheduleEvent {
+  id:          string;
+  sport:       string;
+  eventTitle:  string;
+  day:         string;
+  time:        string;
+  venue:       string;
+  marketId?:   string;
+}
+
+export interface ResolvedMarket {
+  id:            string;
+  sport:         string;
+  title:         string;
+  aiProb:        number;
+  consensusLine: number;
+  outcome:       'YES' | 'NO';
+  payoutPool:    string;
+  postMortem:    string;
+  date:          string;
+}
+

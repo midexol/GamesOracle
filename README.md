@@ -53,13 +53,13 @@ The React application implements the following dynamic flows:
 
 ```mermaid
 graph TD
-    User([Users & Agents]) -->|UI Navigation / Chat / A2A call| Brain[Agent Brain: LLM Orchestrator]
-    Brain -->|Drafts Market & Pricing| State[Dynamic Store: Markets / Positions]
-    Brain -->|Calculates Odds| Signals[Weighted Signals: Season Bests 60%, Head-to-Head 25%, Fitness 15%]
-    State -->|Render Views| UI[React Broadside Dashboard]
-    UI -->|Stake / Bet| Escrow[X Layer Escrow Smart Contract]
-    Escrow -->|2% Platform Fee| Fees[Fee Ticker]
-    Escrow -->|Settle Payouts| User
+    User(["Users & Agents"]) -->|"UI Navigation / Chat / A2A call"| Brain["Agent Brain: LLM Orchestrator"]
+    Brain -->|"Drafts Market & Pricing"| State["Dynamic Store: Markets / Positions"]
+    Brain -->|"Calculates Odds"| Signals["Weighted Signals: Season Bests 60%, Head-to-Head 25%, Fitness 15%"]
+    State -->|"Render Views"| UI["React Broadside Dashboard"]
+    UI -->|"Stake / Bet"| Escrow["X Layer Escrow Smart Contract"]
+    Escrow -->|"2% Platform Fee"| Fees["Fee Ticker"]
+    Escrow -->|"Settle Payouts"| User
 ```
 
 ---

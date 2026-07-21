@@ -31,6 +31,10 @@ export default function Header({
     dispatch:   'DISPATCH',
     ledger:     'THE LEDGER',
     whitepaper: 'WHITEPAPER',
+    schedule:   'GAMES SCHEDULE',
+    verdicts:   'VERDICTS COLUMN',
+    accuracy:   'ACCURACY AUDIT',
+    api:        'MCP INTERFACE',
   };
 
   const pageRight: Record<AppTab, string> = {
@@ -39,6 +43,10 @@ export default function Header({
     dispatch:   'Filed 09:14 BST',
     ledger:     'Updated live',
     whitepaper: 'v0.1 Working Draft',
+    schedule:   'Glasgow 2026 Calendar',
+    verdicts:   'Settled escrow payouts',
+    accuracy:   'Calibration stats',
+    api:        'ASP endpoint tools',
   };
 
   return (
@@ -78,11 +86,12 @@ export default function Header({
           <div className="tagline">"An AI oracle, priced and printed for every medal in Glasgow."</div>
           <nav className="subnav">
             <a onClick={() => onNavigate('markets')} className="live">Markets</a>
-            <a onClick={() => onNavigate('dispatch')}>Dispatch</a>
+            <a onClick={() => onNavigate('schedule')}>Schedule</a>
+            <a onClick={() => onNavigate('verdicts')}>Verdicts</a>
             <a onClick={() => onNavigate('ledger')}>Ledger</a>
+            <a onClick={() => onNavigate('accuracy')}>Accuracy</a>
             <a onClick={() => onNavigate('whitepaper')}>Whitepaper</a>
-            <a href="#method">Method</a>
-            <a href="#sections">Editions</a>
+            <a onClick={() => onNavigate('api')}>API</a>
           </nav>
         </div>
       ) : (
@@ -101,9 +110,12 @@ export default function Header({
           <nav className="subnav">
             <a onClick={() => onNavigate('landing')}>Front Page</a>
             <a onClick={() => onNavigate('markets')}    className={activeTab === 'markets'    ? 'active' : ''}>Markets</a>
-            <a onClick={() => onNavigate('dispatch')}   className={activeTab === 'dispatch'   ? 'active' : ''}>Dispatch</a>
+            <a onClick={() => onNavigate('schedule')}   className={activeTab === 'schedule'   ? 'active' : ''}>Schedule</a>
+            <a onClick={() => onNavigate('verdicts')}   className={activeTab === 'verdicts'   ? 'active' : ''}>Verdicts</a>
             <a onClick={() => onNavigate('ledger')}     className={activeTab === 'ledger'     ? 'active' : ''}>Ledger</a>
+            <a onClick={() => onNavigate('accuracy')}   className={activeTab === 'accuracy'   ? 'active' : ''}>Accuracy</a>
             <a onClick={() => onNavigate('whitepaper')} className={activeTab === 'whitepaper' ? 'active' : ''}>Whitepaper</a>
+            <a onClick={() => onNavigate('api')}        className={activeTab === 'api'        ? 'active' : ''}>API</a>
           </nav>
           <button className="wallet-btn hard-shadow-sm" onClick={onConnectWallet}>
             {walletConnected ? `⬡ ${walletAddress}` : '⬡ Connect OKX Wallet'}

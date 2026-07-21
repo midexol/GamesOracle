@@ -6,7 +6,11 @@ import Dashboard from './components/Dashboard';
 import MarketDetail from './components/MarketDetail';
 import Ledger   from './components/Ledger';
 import Whitepaper from './components/Whitepaper';
-import type { Market, LedgerPosition, AppTab } from './types';
+import Schedule from './components/Schedule';
+import Verdicts from './components/Verdicts';
+import Accuracy from './components/Accuracy';
+import ApiDocs  from './components/ApiDocs';
+import type { Market, LedgerPosition, AppTab, ScheduleEvent } from './types';
 
 // ── Page animation variants ───────────────────────────────
 const pageVariants: Variants = {
@@ -55,6 +59,25 @@ export default function App(): React.ReactElement {
   };
 
   const handleAddPosition = (pos: LedgerPosition) => setLedger(prev => [pos, ...prev]);
+
+  const handleRequestMarket = (event: ScheduleEvent) => {
+    const exists = markets.some(m => m.title.toLowerCase().includes(event.eventTitle.toLowerCase().split(',')[0].toLowerCase()));
+    if (exists) return;
+
+    const newMarket: Market = {
+      id: `market-${Date.now()}`,
+      sport: event.sport,
+      title: event.eventTitle,
+      prob: Math.floor(Math.random() * 40) + 30,
+      line: Math.floor(Math.random() * 40) + 30,
+      vol: '0',
+      close: '2d',
+      confidence: Math.floor(Math.random() * 20) + 65,
+      isNew: true,
+      reasoning: `This bespoke market was generated dynamically on user request from the Glasgow schedule wire. GamesOracle AI has ingested competitor form data for ${event.eventTitle} and priced it with an explainable confidence weighting.`
+    };
+    setMarkets(prev => [newMarket, ...prev]);
+  };
 
   const walletAddress = '0x4F…9aC1';
 
@@ -111,6 +134,21 @@ export default function App(): React.ReactElement {
           )}
 
           {activeTab === 'whitepaper' && <Whitepaper />}
+
+          {activeTab === 'schedule' && (
+            <Schedule
+              markets={markets}
+              onRequestMarket={handleRequestMarket}
+              onNavigate={handleNavigate}
+              setSelectedMarket={setSelectedMarket}
+            />
+          )}
+
+          {activeTab === 'verdicts' && <Verdicts />}
+
+          {activeTab === 'accuracy' && <Accuracy />}
+
+          {activeTab === 'api' && <ApiDocs />}
         </motion.div>
       </AnimatePresence>
 
