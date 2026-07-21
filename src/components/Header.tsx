@@ -40,7 +40,7 @@ export default function Header({
   };
 
   const pageRight: Record<AppTab, string> = {
-    landing:    'Price: Free · OKX.AI',
+    landing:    'OKX.AI',
     markets:    '14 Open · Auto-refreshing',
     dispatch:   'Filed 09:14 BST',
     ledger:     'Updated live',
@@ -69,7 +69,7 @@ export default function Header({
                 </span>
               </span>
             )}
-            <span className="page-right-desc">{pageRight[activeTab]}</span>
+            <span className="page-right-desc" style={{ marginLeft: '6px' }}>{pageRight[activeTab]}</span>
           </span>
           <button className="wallet-btn hard-shadow-sm" onClick={onConnectWallet}>
             {walletConnected ? `⬡ ${walletAddress}` : '⬡ Connect OKX Wallet'}
