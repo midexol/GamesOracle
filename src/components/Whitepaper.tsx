@@ -68,6 +68,10 @@ export default function Whitepaper() {
               {SECTIONS.map(({ id, label }, idx) => {
                 const active = activeIdx === idx;
                 const isPast = idx < activeIdx;
+                let textColor = 'var(--muted)';
+                if (active) textColor = 'var(--ink)';
+                else if (isPast) textColor = 'var(--purple)';
+
                 return (
                   <li key={id}>
                     <button
@@ -80,13 +84,13 @@ export default function Whitepaper() {
                         borderLeft: active ? '3px solid var(--purple)' : '3px solid transparent',
                         padding: '6px 8px',
                         cursor: 'pointer',
-                        color: active ? 'var(--ink)' : isPast ? 'var(--purple)' : 'var(--muted)',
+                        color: textColor,
                         fontWeight: active ? '700' : '400',
                         fontFamily: 'inherit',
                         fontSize: '11px',
                         display: 'flex',
                         alignItems: 'center',
-                        justify-content: 'space-between',
+                        justifyContent: 'space-between',
                         transition: 'all 0.15s ease',
                       }}
                     >
