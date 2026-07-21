@@ -1,14 +1,14 @@
 # GamesOracle AI
 ## An AI Oracle Agent for Real-Time Sports Prediction Markets
-### Whitepaper — v0.1 (Working Draft)
+### Whitepaper - v0.1 (Working Draft)
 
 **Project:** GamesOracle AI  
-**Track:** OKX.AI Genesis Hackathon — Agent Service Provider (ASP)  
+**Track:** OKX.AI Genesis Hackathon - Agent Service Provider (ASP)  
 **Categories:** Finance Copilot · Creative Genius · Revenue Rocket  
 **Chain:** X Layer (EVM-compatible)  
 **Author:** Mide  
 **Date:** July 2026  
-**Status:** Draft — architecture and figures illustrative pending live deployment  
+**Status:** Draft - architecture and figures illustrative pending live deployment  
 
 ---
 
@@ -32,18 +32,18 @@
 
 GamesOracle AI is an autonomous agent that reads live sporting event schedules, drafts prediction markets, prices them with an explainable confidence score, and settles them on-chain the moment an official result is published. It is built as an Agent Service Provider (ASP) on OKX.AI, reachable by both human users through a dashboard and other autonomous agents through a standardized Agent-to-MCP interface. The initial deployment is scoped to the Glasgow 2026 Commonwealth Games (23 July – 2 August 2026), chosen because its ten-sport, eleven-day schedule offers a dense, verifiable, and time-boxed proving ground for the underlying architecture, which is not itself specific to any one event.
 
-Unlike existing prediction markets, which typically present a price with no visible reasoning, GamesOracle AI publishes the inputs behind every probability it assigns — season form, head-to-head history, and injury or fitness reporting — alongside a confidence score that reflects data completeness rather than the model's certainty alone. Settlement occurs through a minimal escrow smart contract on X Layer, with the agent itself acting as the resolving oracle for verified outcomes.
+Unlike existing prediction markets, which typically present a price with no visible reasoning, GamesOracle AI publishes the inputs behind every probability it assigns (season form, head-to-head history, and injury or fitness reporting) alongside a confidence score that reflects data completeness rather than the model's certainty alone. Settlement occurs through a minimal escrow smart contract on X Layer, with the agent itself acting as the resolving oracle for verified outcomes.
 
 ---
 
 ## 2. Problem Statement
 
-Prediction markets for major single events — a World Cup final, a presidential election — are well served. Markets for niche, multi-event competitions are not. Commonwealth Games–scale events span dozens of disciplines and hundreds of individual sessions, most of which no bookmaker prices in any depth, and none of which come with a stated rationale for the number shown.
+Prediction markets for major single events (a World Cup final, a presidential election) are well served. Markets for niche, multi-event competitions are not. Commonwealth Games–scale events span dozens of disciplines and hundreds of individual sessions, most of which no bookmaker prices in any depth, and none of which come with a stated rationale for the number shown.
 
 ### 2.1 Gaps in the current landscape
 * **Odds are presented without reasoning:** A number with no visible inputs, offering no way to evaluate whether it is well-calibrated.
 * **Settlement is manual and slow:** Dependent on centralized bookmakers or exchanges rather than a transparent, on-chain resolution process.
-* **No machine-readable interface exists:** Other software agents cannot consume structured sports forecasts — a gap that matters increasingly as agent-to-agent commerce grows.
+* **No machine-readable interface exists:** Other software agents cannot consume structured sports forecasts, a gap that matters increasingly as agent-to-agent commerce grows.
 * **Niche and regional interest is underserved:** Existing platforms concentrate liquidity on a small number of headline markets, completely ignoring country-level specific interest.
 
 ---
@@ -63,7 +63,7 @@ GamesOracle AI closes these gaps with four components acting in sequence: event 
 ## 4. How It Works
 
 ### 4.1 Event discovery and market creation
-The agent ingests the competition schedule — venue, session, discipline, and medal status — and drafts markets automatically for high-interest sessions, or on request through natural language ("create a market for the Nigeria medal bundle"). Each market is defined by a question, a close time, and a resolution source.
+The agent ingests the competition schedule (venue, session, discipline, and medal status) and drafts markets automatically for high-interest sessions, or on request through natural language ("create a market for the Nigeria medal bundle"). Each market is defined by a question, a close time, and a resolution source.
 
 ### 4.2 Oracle and data aggregation
 Pricing draws on multiple weighted signals: recent season form, head-to-head history between the specific competitors or nations involved, and current injury or fitness reporting. The relative weighting is disclosed per market rather than hidden inside a single opaque model call.
@@ -86,9 +86,9 @@ The system is organized into five layers, each independently testable and replac
 | **Data Aggregation** | Schedule and results ingestion, historical statistics, sentiment (stretch) |
 | **Oracle Resolution** | Result verification, confidence scoring, dispute flagging |
 | **Market State Store** | Persisted markets, forecasts, positions, and fee ledger |
-| **Settlement Layer** | X Layer escrow contract — stake, resolve, claim |
+| **Settlement Layer** | X Layer escrow contract (stake, resolve, claim) |
 
-*Table 1 — System layers and responsibilities.*
+*Table 1: System layers and responsibilities.*
 
 The agent brain never calls the settlement layer directly with unaudited output; all resolution calls pass through the oracle resolution layer, which enforces the single-source-of-truth rule described in Section 4.4.
 
@@ -97,12 +97,12 @@ The agent brain never calls the settlement layer directly with unaudited output;
 ## 6. Smart Contract Design
 
 Settlement uses a deliberately minimal escrow contract on X Layer rather than a full automated market maker, prioritizing auditability over capital efficiency at this stage. Core functions:
-* `createMarket(marketId, question, closeTime, oracle)` — registers a new market and its designated resolver address.
-* `stake(marketId, side)` — accepts a stake on either outcome before the close time.
-* `resolveMarket(marketId, outcome)` — callable only by the designated oracle address, settles the outcome once.
-* `claimPayout(marketId)` — distributes the winning pool, less a platform fee, proportional to each participant's stake.
+* `createMarket(marketId, question, closeTime, oracle)` - registers a new market and its designated resolver address.
+* `stake(marketId, side)` - accepts a stake on either outcome before the close time.
+* `resolveMarket(marketId, outcome)` - callable only by the designated oracle address, settles the outcome once.
+* `claimPayout(marketId)` - distributes the winning pool, less a platform fee, proportional to each participant's stake.
 
-Production deployment requires a reentrancy guard on `claimPayout` and a multi-signature or multi-oracle fallback for high-value markets — both scoped as near-term hardening work rather than shipped in the initial version, and should not be treated as production-ready until added.
+Production deployment requires a reentrancy guard on `claimPayout` and a multi-signature or multi-oracle fallback for high-value markets, both scoped as near-term hardening work rather than shipped in the initial version, and should not be treated as production-ready until added.
 
 ---
 
@@ -115,7 +115,7 @@ Production deployment requires a reentrancy guard on `claimPayout` and a multi-s
 | **Private/custom markets** | Subscription tier for bespoke bundle markets | Roadmap |
 | **Revenue share** | Share of resolution fees returned to a market's original creator | Roadmap |
 
-*Table 2 — Revenue mechanisms by implementation status.*
+*Table 2: Revenue mechanisms by implementation status.*
 
 ---
 
@@ -142,14 +142,14 @@ Event-agnostic expansion beyond sports, multi-oracle consensus and community dis
 
 * **Resolution-source reliability:** no confirmed low-latency official results API has been secured at time of writing; near-term markets may rely on manually curated results.
 * **Regulatory:** prediction markets intersect gambling regulation in many jurisdictions; scope and geographic availability should be reviewed before any mainnet, real-value launch.
-* **Naming:** "GamesOracle AI" is a working name pending a final decision — see accompanying brand discussion.
+* **Naming:** "GamesOracle AI" is a working name pending a final decision (see accompanying brand discussion).
 * **Oracle centralization:** the agent is currently the sole resolver for each market; a multi-oracle or dispute-vote fallback is necessary before handling non-trivial stake sizes.
 
 ---
 
 ## 11. Conclusion
 
-GamesOracle AI demonstrates that a prediction market can be both explainable and autonomous — pricing an event with visible reasoning, then settling it without manual intervention. The Glasgow 2026 Commonwealth Games deployment is a proving ground for an architecture intended to generalize well beyond a single competition, and beyond sports altogether.
+GamesOracle AI demonstrates that a prediction market can be both explainable and autonomous: pricing an event with visible reasoning, then settling it without manual intervention. The Glasgow 2026 Commonwealth Games deployment is a proving ground for an architecture intended to generalize well beyond a single competition, and beyond sports altogether.
 
 ---
 
