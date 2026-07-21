@@ -6,8 +6,8 @@
   --rule: #D3CDBF;
   --red: #C81C1C;
   --green: #2F6B3A;
-  --purple: #9B6BFF;
-  --purple-light: rgba(155, 107, 255, 0.12);
+  --purple: #FF6B00;
+  --purple-light: rgba(255, 107, 0, 0.12);
 }
 
 /* ===================================================
@@ -1516,7 +1516,7 @@ table.box td.ai {
 /* ── Hard shadow utilities ─────────────────────────────── */
 .hard-shadow    { box-shadow: 4px 4px 0 0 #111111; }
 .hard-shadow-sm { box-shadow: 2px 2px 0 0 #111111; }
-.hard-shadow-purple { box-shadow: 4px 4px 0 0 #9B6BFF; }
+.hard-shadow-purple { box-shadow: 4px 4px 0 0 #FF6B00; }
 
 /* Retro press: button depresses on active */
 .btn:active, .wallet-btn:active {
