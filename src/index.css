@@ -6,6 +6,69 @@
   --rule: #D3CDBF;
   --red: #C81C1C;
   --green: #2F6B3A;
+  --purple: #9B6BFF;
+  --purple-light: rgba(155, 107, 255, 0.12);
+}
+
+/* ===================================================
+   KEYFRAME ANIMATIONS
+   =================================================== */
+
+@keyframes railSlideIn {
+  from { width: 0%; }
+  to   { width: var(--rail-target, 50%); }
+}
+
+@keyframes rowFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.2; transform: translateY(0); }
+  30%           { opacity: 1;   transform: translateY(-4px); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes confettiPop {
+  0%   { transform: scale(0.9); opacity: 0; }
+  60%  { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes toastSlide {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 * {
@@ -152,6 +215,11 @@ nav.subnav a.live::before {
   color: var(--paper);
 }
 
+/* Tab page animation wrapper */
+.page-enter {
+  animation: tabFadeIn 0.28s ease forwards;
+}
+
 /* Layout structure */
 .layout {
   max-width: 1280px;
@@ -250,6 +318,11 @@ table.markets tr:hover {
   cursor: pointer;
 }
 
+/* Animated market row on entry (new markets from chat) */
+table.markets tr.row-new {
+  animation: rowFadeIn 0.4s ease forwards;
+}
+
 td.question {
   font-family: 'Source Serif 4', serif;
   font-size: 14.5px;
@@ -279,6 +352,7 @@ td.tag {
   left: 0;
   bottom: 0;
   background: var(--ink);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .rail-tick {
@@ -293,6 +367,44 @@ td.tag {
   font-size: 10px;
   color: var(--muted);
   margin-top: 3px;
+}
+
+/* Confidence badge — Thistle Purple accent */
+.confidence-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--purple-light);
+  color: var(--purple);
+  border: 1px solid var(--purple);
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+
+.confidence-badge::before {
+  content: '◈';
+  font-size: 9px;
+}
+
+/* Volume mini-bar */
+.vol-bar {
+  width: 60px;
+  height: 6px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  margin-top: 3px;
+}
+
+.vol-fill {
+  height: 100%;
+  background: var(--ink);
+  opacity: 0.35;
 }
 
 /* Sidebar cards */
@@ -402,6 +514,7 @@ td.tag {
   font-size: 38px;
   font-weight: 900;
   color: var(--ink);
+  animation: countUp 0.5s ease;
 }
 
 .fee-counter .unit {
@@ -411,6 +524,80 @@ td.tag {
   font-weight: 400;
   display: block;
   margin-top: 4px;
+}
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--red);
+  align-self: flex-start;
+  width: fit-content;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Chat toast confirmation */
+.chat-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  z-index: 1000;
+  animation: toastSlide 0.3s ease;
+  border-left: 3px solid var(--purple);
+}
+
+/* Bet confirmation toast */
+.bet-toast {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 14px 18px;
+  margin-top: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  animation: confettiPop 0.35s ease;
+  border-left: 3px solid var(--green);
+}
+
+.bet-toast.no-bet {
+  border-left-color: var(--red);
+}
+
+.bet-toast .tx {
+  color: var(--purple);
+  margin-top: 4px;
+  font-size: 10px;
+}
+
+/* Live pulse dot */
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  margin-right: 5px;
+  animation: pulseLive 1.6s ease-in-out infinite;
 }
 
 /* Hero broadsheet styling */
@@ -542,6 +729,11 @@ td.tag {
   padding: 34px 30px;
   border-right: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
+  transition: background 0.2s ease;
+}
+
+.section:hover {
+  background: var(--paper-2);
 }
 
 .section:last-child {
@@ -932,7 +1124,12 @@ h2.headline {
   padding: 30px 26px;
   border-right: 1px solid var(--rule);
   text-align: center;
+  animation: countUp 0.6s ease both;
 }
+
+.stat-block:nth-child(1) { animation-delay: 0.05s; }
+.stat-block:nth-child(2) { animation-delay: 0.15s; }
+.stat-block:nth-child(3) { animation-delay: 0.25s; }
 
 .stat-block:last-child {
   border-right: none;
@@ -959,6 +1156,24 @@ h2.headline {
 
 .stat-block .num.green {
   color: var(--green);
+}
+
+/* Chain badge */
+.chain-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--purple-light);
+  color: var(--purple);
+  border: 1px solid var(--purple);
+  padding: 1px 5px;
+  margin-left: 6px;
+  vertical-align: middle;
 }
 
 table.ledger {
@@ -1027,12 +1242,14 @@ td.pnl.neg {
 }
 
 .fee-strip {
-  border: 1px solid var(--ink);
+  border: 2px solid var(--ink);
+  border-left: 5px solid var(--purple);
   padding: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
+  background: var(--purple-light);
 }
 
 .fee-strip .left h4 {
@@ -1041,7 +1258,7 @@ td.pnl.neg {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 0 0 6px;
-  color: var(--muted);
+  color: var(--purple);
 }
 
 .fee-strip .left .desc {
@@ -1053,6 +1270,16 @@ td.pnl.neg {
   font-family: 'Playfair Display', serif;
   font-size: 36px;
   font-weight: 900;
+  color: var(--purple);
+}
+
+.fee-strip .unit-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 3px;
 }
 
 /* Footer styling */
@@ -1061,11 +1288,72 @@ footer {
   padding: 24px 32px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 11px;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+footer .footer-brand {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+footer .footer-tag {
+  color: var(--purple);
+  font-weight: 600;
+}
+
+/* Hero enhancements */
+.hero-wallet-cta {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-wallet-cta .wallet-status {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--green);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hero-wallet-cta .wallet-status::before {
+  content: '● ';
+  color: var(--green);
+}
+
+/* Landing odds table AI column highlight */
+table.box td.ai {
+  color: var(--purple);
+  font-weight: 700;
+}
+
+/* Wire items with animate */
+.wire-item {
+  border-bottom: 1px dashed var(--rule);
+  padding: 12px 0;
+  font-size: 13px;
+  transition: background 0.15s ease;
+}
+
+.wire-item:hover {
+  background: var(--paper-2);
+  padding-left: 8px;
+}
+
+/* Landing hero animate on mount */
+.hero-main {
+  animation: tabFadeIn 0.4s ease;
+}
+
+.hero-side {
+  animation: tabFadeIn 0.55s ease;
 }
 
 /* Media Queries for responsiveness */
@@ -1189,4 +1477,176 @@ footer {
     overflow-y: visible;
   }
 }
+
+/* ============================================================
+   PHASE 2 DESIGN SYSTEM
+   Hard shadows · Dual rails · New components
+   ============================================================ */
+
+/* ── Hard shadow utilities ─────────────────────────────── */
+.hard-shadow    { box-shadow: 4px 4px 0 0 #111111; }
+.hard-shadow-sm { box-shadow: 2px 2px 0 0 #111111; }
+.hard-shadow-purple { box-shadow: 4px 4px 0 0 #9B6BFF; }
+
+/* Retro press: button depresses on active */
+.btn:active, .wallet-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 #111111;
+}
+
+/* ── Markets container ─────────────────────────────────── */
+.markets-container {
+  border: 2px solid var(--ink);
+  margin-bottom: 24px;
+}
+
+/* ── Dual confidence rails ─────────────────────────────── */
+.rail-dual { min-width: 160px; }
+
+.rail-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.rail-label-ai, .rail-label-mkt {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: 24px;
+  flex-shrink: 0;
+}
+.rail-label-ai  { color: var(--purple); }
+.rail-label-mkt { color: var(--ink); }
+
+.rail-track {
+  flex: 1;
+  height: 11px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  position: relative;
+}
+
+.rail-ai-fill {
+  height: 100%;
+  background: var(--purple);
+  opacity: 0.85;
+  position: absolute;
+  top: 0; left: 0;
+}
+
+.rail-line-fill {
+  height: 100%;
+  background: var(--ink);
+  opacity: 0.65;
+  position: absolute;
+  top: 0; left: 0;
+}
+
+.rail-pct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  width: 26px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.rail-edge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 1px;
+  padding-left: 30px;
+}
+.rail-edge.pos { color: var(--green); }
+.rail-edge.neg { color: var(--red);   }
+
+/* ── EDGE badge ────────────────────────────────────────── */
+.edge-flag {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--green);
+  color: var(--paper);
+  padding: 1px 5px;
+  margin-left: 7px;
+  vertical-align: middle;
+}
+
+/* ── Coupon — scissors icon + wider dashes ─────────────── */
+.coupon {
+  border: 3px dashed var(--ink);
+  padding: 20px;
+  margin-top: 24px;
+  position: relative;
+}
+
+.coupon::before { content: none; } /* disable old CSS scissors */
+
+.coupon-scissors {
+  position: absolute;
+  top: -14px;
+  left: 12px;
+  background: var(--paper);
+  padding: 0 6px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+}
+
+/* ── Stake buttons (BettingCoupon) ─────────────────────── */
+.stake-btn {
+  flex: 1;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  border: 2px solid var(--ink);
+  background: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-radius: 0;
+}
+
+.stake-btn.sel            { background: var(--ink); color: var(--paper); }
+.stake-btn:hover:not(.sel):not(:disabled) { background: var(--paper-2); }
+.stake-btn:disabled       { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Claim payout button ───────────────────────────────── */
+.claim-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--purple);
+  background: var(--purple-light);
+  color: var(--purple);
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-radius: 0;
+  white-space: nowrap;
+}
+.claim-btn:hover { background: var(--purple); color: var(--paper); }
+
+/* ── Large rail — purple fill override ─────────────────── */
+.rail-big {
+  position: relative;
+  height: 32px;
+  background: var(--paper-2);
+  border: 2px solid var(--ink);
+  margin: 14px 0 6px;
+  overflow: hidden;
+}
+
 
