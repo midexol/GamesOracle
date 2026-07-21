@@ -3,6 +3,7 @@ import Landing from './components/Landing';
 import Dashboard from './components/Dashboard';
 import MarketDetail from './components/MarketDetail';
 import Portfolio from './components/Portfolio';
+import Whitepaper from './components/Whitepaper';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('landing');
@@ -132,6 +133,8 @@ export default function App() {
                 ? 'MARKETS COLUMN'
                 : activeTab === 'dispatch'
                 ? 'DISPATCH'
+                : activeTab === 'whitepaper'
+                ? 'WHITEPAPER'
                 : 'THE LEDGER'}
             </span>
             <span>
@@ -139,6 +142,8 @@ export default function App() {
                 ? '14 Open · Auto-refreshing'
                 : activeTab === 'dispatch'
                 ? 'Filed 09:14 BST'
+                : activeTab === 'whitepaper'
+                ? 'v0.1 Working Draft'
                 : 'Updated live'}
             </span>
           </>
@@ -157,6 +162,7 @@ export default function App() {
             </a>
             <a onClick={() => handleNavigate('dispatch')}>Dispatch</a>
             <a onClick={() => handleNavigate('ledger')}>Ledger</a>
+            <a onClick={() => handleNavigate('whitepaper')}>Whitepaper</a>
             <a href="#method">Method</a>
             <a href="#sections">Editions</a>
           </nav>
@@ -177,6 +183,9 @@ export default function App() {
             </a>
             <a onClick={() => handleNavigate('ledger')} className={activeTab === 'ledger' ? 'active' : ''}>
               Ledger
+            </a>
+            <a onClick={() => handleNavigate('whitepaper')} className={activeTab === 'whitepaper' ? 'active' : ''}>
+              Whitepaper
             </a>
           </nav>
           <button className="wallet-btn" onClick={handleConnectWallet}>
@@ -204,6 +213,8 @@ export default function App() {
       )}
 
       {activeTab === 'ledger' && <Portfolio ledger={ledger} platformFees={platformFees} />}
+
+      {activeTab === 'whitepaper' && <Whitepaper />}
 
       {/* Shared Footer */}
       <footer>
