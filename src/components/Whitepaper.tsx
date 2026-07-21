@@ -16,7 +16,10 @@ const SECTIONS: Section[] = [
   { id: 'sec-conclusion',  label: '11. Conclusion'         },
 ];
 
-export default function Whitepaper(): React.ReactElement {
+const h3Style = { fontSize: '22px', borderBottom: '1px solid var(--ink)', paddingBottom: '6px', marginTop: '0', color: 'var(--ink)' };
+const h4Style = { fontSize: '13px', margin: '20px 0 8px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ink)' };
+
+export default function Whitepaper() {
   const [activeIdx, setActiveIdx] = useState(0);
 
   const totalSections = SECTIONS.length;
@@ -28,9 +31,6 @@ export default function Whitepaper(): React.ReactElement {
       window.scrollTo(0, 120);
     }
   };
-
-  const h3Style: React.CSSProperties = { fontSize: '22px', borderBottom: '1px solid var(--ink)', paddingBottom: '6px', marginTop: '0', color: 'var(--ink)' };
-  const h4Style: React.CSSProperties = { fontSize: '13px', margin: '20px 0 8px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ink)' };
 
   return (
     <div className="wrap" style={{ maxWidth: '1180px', padding: '40px 32px 80px' }}>
