@@ -96,31 +96,33 @@ export default function Landing({
       {/* Odds sample */}
       <div className="odds-sample">
         <h3>This Morning's Line</h3>
-        <table className="box hard-shadow">
-          <thead>
-            <tr>
-              <th>Sport</th><th>Market</th><th>AI %</th><th>Confidence</th><th>Market Line</th><th>Closes</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              { sport: 'Athletics',    q: "Jamaica gold, Women's 100m",             ai: '34%', conf: '71%', line: '38%', close: '6h',  tab: 'dispatch' as AppTab },
-              { sport: 'Swimming',     q: 'Australia, 2+ golds Day 2',              ai: '57%', conf: '82%', line: '50%', close: '3h',  tab: 'markets'  as AppTab },
-              { sport: 'Boxing',       q: 'India, 3+ finals reached',               ai: '41%', conf: '68%', line: '45%', close: '1d',  tab: 'markets'  as AppTab },
-              { sport: 'Netball',      q: 'Nigeria to beat Australia, group stage', ai: '22%', conf: '74%', line: '20%', close: '1d',  tab: 'markets'  as AppTab },
-              { sport: 'Weightlifting',q: 'Over/Under 8 total medals, Nigeria',     ai: '61%', conf: '77%', line: '55%', close: '9d',  tab: 'markets'  as AppTab },
-            ].map(row => (
-              <tr key={row.q} style={{ cursor: 'pointer' }} onClick={() => onNavigate(row.tab)}>
-                <td>{row.sport}</td>
-                <td className="q">{row.q}</td>
-                <td className="ai">{row.ai}</td>
-                <td><span className="confidence-badge">{row.conf}</span></td>
-                <td>{row.line}</td>
-                <td>{row.close}</td>
+        <div className="table-responsive">
+          <table className="box hard-shadow">
+            <thead>
+              <tr>
+                <th>Sport</th><th>Market</th><th>AI %</th><th>Confidence</th><th>Market Line</th><th>Closes</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {[
+                { sport: 'Athletics',    q: "Jamaica gold, Women's 100m",             ai: '34%', conf: '71%', line: '38%', close: '6h',  tab: 'dispatch' as AppTab },
+                { sport: 'Swimming',     q: 'Australia, 2+ golds Day 2',              ai: '57%', conf: '82%', line: '50%', close: '3h',  tab: 'markets'  as AppTab },
+                { sport: 'Boxing',       q: 'India, 3+ finals reached',               ai: '41%', conf: '68%', line: '45%', close: '1d',  tab: 'markets'  as AppTab },
+                { sport: 'Netball',      q: 'Nigeria to beat Australia, group stage', ai: '22%', conf: '74%', line: '20%', close: '1d',  tab: 'markets'  as AppTab },
+                { sport: 'Weightlifting',q: 'Over/Under 8 total medals, Nigeria',     ai: '61%', conf: '77%', line: '55%', close: '9d',  tab: 'markets'  as AppTab },
+              ].map(row => (
+                <tr key={row.q} style={{ cursor: 'pointer' }} onClick={() => onNavigate(row.tab)}>
+                  <td>{row.sport}</td>
+                  <td className="q">{row.q}</td>
+                  <td className="ai">{row.ai}</td>
+                  <td><span className="confidence-badge">{row.conf}</span></td>
+                  <td>{row.line}</td>
+                  <td>{row.close}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Sections */}

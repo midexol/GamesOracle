@@ -57,7 +57,7 @@ export default function Whitepaper(): React.ReactElement {
       {/* Title header */}
       <div style={{ textAlign: 'center', marginBottom: '40px', borderBottom: '2px solid var(--ink)', paddingBottom: '30px' }}>
         <div className="mono" style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--red)', marginBottom: '10px', fontWeight: '600' }}>
-          Whitepaper — v0.1 (Working Draft)
+          Whitepaper - v0.1 (Working Draft)
         </div>
         <h1 className="display" style={{ fontSize: '48px', margin: '0 0 10px', fontWeight: '900', letterSpacing: '-1px' }}>
           GAMESORACLE AI
@@ -106,17 +106,17 @@ export default function Whitepaper(): React.ReactElement {
           <section id="sec-abstract" style={sectionStyle}>
             <h3 className="display" style={h3Style}>1. Abstract</h3>
             <p>GamesOracle AI is an autonomous agent that reads live sporting event schedules, drafts prediction markets, prices them with an explainable confidence score, and settles them on-chain the moment an official result is published. It is built as an Agent Service Provider (ASP) on OKX.AI, reachable by both human users through a dashboard and other autonomous agents through a standardized Agent-to-MCP interface. The initial deployment is scoped to the Glasgow 2026 Commonwealth Games (23 July – 2 August 2026), chosen because its ten-sport, eleven-day schedule offers a dense, verifiable, and time-boxed proving ground for the underlying architecture.</p>
-            <p>Unlike existing prediction markets, which typically present a price with no visible reasoning, GamesOracle AI publishes the inputs behind every probability it assigns — season form, head-to-head history, and injury or fitness reporting — alongside a confidence score that reflects data completeness rather than the model's certainty alone. Settlement occurs through a minimal escrow smart contract on X Layer, with the agent itself acting as the resolving oracle for verified outcomes.</p>
+            <p>Unlike existing prediction markets, which typically present a price with no visible reasoning, GamesOracle AI publishes the inputs behind every probability it assigns (season form, head-to-head history, and injury or fitness reporting) alongside a confidence score that reflects data completeness rather than the model's certainty alone. Settlement occurs through a minimal escrow smart contract on X Layer, with the agent itself acting as the resolving oracle for verified outcomes.</p>
           </section>
 
           <section id="sec-problem" style={sectionStyle}>
             <h3 className="display" style={h3Style}>2. Problem Statement</h3>
-            <p>Prediction markets for major single events — a World Cup final, a presidential election — are well served. Markets for niche, multi-event competitions are not. Commonwealth Games–scale events span dozens of disciplines and hundreds of individual sessions, most of which no bookmaker prices in any depth, and none of which come with a stated rationale for the number shown.</p>
+            <p>Prediction markets for major single events (a World Cup final, a presidential election) are well served. Markets for niche, multi-event competitions are not. Commonwealth Games–scale events span dozens of disciplines and hundreds of individual sessions, most of which no bookmaker prices in any depth, and none of which come with a stated rationale for the number shown.</p>
             <h4 className="mono" style={h4Style}>2.1 Gaps in the current landscape</h4>
             <ul style={{ paddingLeft: '20px', marginBottom: '16px' }}>
               <li><strong>Odds are presented without reasoning:</strong> A number with no visible inputs, offering no way to evaluate whether it is well-calibrated.</li>
               <li><strong>Settlement is manual and slow:</strong> Dependent on centralized bookmakers rather than a transparent, on-chain resolution process.</li>
-              <li><strong>No machine-readable interface exists:</strong> Other software agents cannot consume structured sports forecasts — a gap that matters increasingly as agent-to-agent commerce grows.</li>
+              <li><strong>No machine-readable interface exists:</strong> Other software agents cannot consume structured sports forecasts, a gap that matters increasingly as agent-to-agent commerce grows.</li>
               <li><strong>Niche and regional interest is underserved:</strong> Existing platforms concentrate liquidity on a small number of headline markets, completely ignoring country-level specific interest.</li>
             </ul>
           </section>
@@ -136,7 +136,7 @@ export default function Whitepaper(): React.ReactElement {
           <section id="sec-howitworks" style={sectionStyle}>
             <h3 className="display" style={h3Style}>4. How It Works</h3>
             <h4 className="mono" style={h4Style}>4.1 Event discovery and market creation</h4>
-            <p>The agent ingests the competition schedule — venue, session, discipline, and medal status — and drafts markets automatically for high-interest sessions, or on request through natural language ("create a market for the Nigeria medal bundle"). Each market is defined by a question, a close time, and a resolution source.</p>
+            <p>The agent ingests the competition schedule (venue, session, discipline, and medal status) and drafts markets automatically for high-interest sessions, or on request through natural language ("create a market for the Nigeria medal bundle"). Each market is defined by a question, a close time, and a resolution source.</p>
             <h4 className="mono" style={h4Style}>4.2 Oracle and data aggregation</h4>
             <p>Pricing draws on multiple weighted signals: recent season form, head-to-head history between the specific competitors or nations involved, and current injury or fitness reporting. The relative weighting is disclosed per market rather than hidden inside a single opaque model call.</p>
             <h4 className="mono" style={h4Style}>4.3 Confidence scoring</h4>
@@ -148,55 +148,59 @@ export default function Whitepaper(): React.ReactElement {
           <section id="sec-architecture" style={sectionStyle}>
             <h3 className="display" style={h3Style}>5. System Architecture</h3>
             <p>The system is organized into five layers, each independently testable and replaceable:</p>
-            <table className="box" style={{ margin: '20px 0', fontSize: '12px' }}>
-              <thead><tr><th style={{ width: '150px' }}>Layer</th><th>Responsibility</th></tr></thead>
-              <tbody>
-                {[
-                  ['Agent Brain',       'Intent parsing, market copy generation, forecast reasoning (LLM, tool-use)'],
-                  ['Data Aggregation',  'Schedule and results ingestion, historical statistics, sentiment (stretch)'],
-                  ['Oracle Resolution', 'Result verification, confidence scoring, dispute flagging'],
-                  ['Market State Store','Persisted markets, forecasts, positions, and fee ledger'],
-                  ['Settlement Layer',  'X Layer escrow contract — stake, resolve, claim'],
-                ].map(([layer, resp]) => (
-                  <tr key={layer}><td className="mono" style={{ fontWeight: '600' }}>{layer}</td><td>{resp}</td></tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="mono" style={{ fontSize: '10px', color: 'var(--muted)', textAlign: 'center', marginBottom: '20px' }}>Table 1 — System layers and responsibilities.</div>
+            <div className="table-responsive">
+              <table className="box" style={{ margin: '20px 0', fontSize: '12px' }}>
+                <thead><tr><th style={{ width: '150px' }}>Layer</th><th>Responsibility</th></tr></thead>
+                <tbody>
+                  {[
+                    ['Agent Brain',       'Intent parsing, market copy generation, forecast reasoning (LLM, tool-use)'],
+                    ['Data Aggregation',  'Schedule and results ingestion, historical statistics, sentiment (stretch)'],
+                    ['Oracle Resolution', 'Result verification, confidence scoring, dispute flagging'],
+                    ['Market State Store','Persisted markets, forecasts, positions, and fee ledger'],
+                    ['Settlement Layer',  'X Layer escrow contract (stake, resolve, claim)'],
+                  ].map(([layer, resp]) => (
+                    <tr key={layer}><td className="mono" style={{ fontWeight: '600' }}>{layer}</td><td>{resp}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="mono" style={{ fontSize: '10px', color: 'var(--muted)', textAlign: 'center', marginBottom: '20px' }}>Table 1: System layers and responsibilities.</div>
           </section>
 
           <section id="sec-contracts" style={sectionStyle}>
             <h3 className="display" style={h3Style}>6. Smart Contract Design</h3>
             <p>Settlement uses a deliberately minimal escrow contract on X Layer rather than a full automated market maker, prioritizing auditability over capital efficiency at this stage. Core functions:</p>
             <ul style={{ paddingLeft: '20px', marginBottom: '16px' }}>
-              <li><code className="mono">createMarket(marketId, question, closeTime, oracle)</code> — registers a new market and its designated resolver address.</li>
-              <li><code className="mono">stake(marketId, side)</code> — accepts a stake on either outcome before the close time.</li>
-              <li><code className="mono">resolveMarket(marketId, outcome)</code> — callable only by the designated oracle address, settles the outcome once.</li>
-              <li><code className="mono">claimPayout(marketId)</code> — distributes the winning pool, less a 2% platform fee, proportional to each participant's stake.</li>
+              <li><code className="mono">createMarket(marketId, question, closeTime, oracle)</code> - registers a new market and its designated resolver address.</li>
+              <li><code className="mono">stake(marketId, side)</code> - accepts a stake on either outcome before the close time.</li>
+              <li><code className="mono">resolveMarket(marketId, outcome)</code> - callable only by the designated oracle address, settles the outcome once.</li>
+              <li><code className="mono">claimPayout(marketId)</code> - distributes the winning pool, less a 2% platform fee, proportional to each participant's stake.</li>
             </ul>
           </section>
 
           <section id="sec-fees" style={sectionStyle}>
             <h3 className="display" style={h3Style}>7. Fee Model and Monetization</h3>
             <p>GamesOracle AI models value capture across several channels:</p>
-            <table className="box" style={{ margin: '20px 0', fontSize: '12px' }}>
-              <thead><tr><th style={{ width: '180px' }}>Revenue stream</th><th>Mechanism</th><th>Status</th></tr></thead>
-              <tbody>
-                {[
-                  ['Resolution fee',         '2% of the total staked pool, collected automatically on settlement', 'Implemented', 'var(--green)'],
-                  ['Pay-per-call forecasts',  'x402 micropayment for premium, cited forecasts consumed by other agents', 'Planned', 'var(--muted)'],
-                  ['Private/custom markets',  'Subscription tier for bespoke bundle markets', 'Roadmap', 'var(--muted)'],
-                  ['Revenue share',           'Share of resolution fees returned to a market\'s original creator', 'Roadmap', 'var(--muted)'],
-                ].map(([name, mech, status, color]) => (
-                  <tr key={name}>
-                    <td className="mono" style={{ fontWeight: '600' }}>{name}</td>
-                    <td>{mech}</td>
-                    <td style={{ color, fontWeight: '600' }}>{status}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="mono" style={{ fontSize: '10px', color: 'var(--muted)', textAlign: 'center', marginBottom: '20px' }}>Table 2 — Revenue mechanisms by implementation status.</div>
+            <div className="table-responsive">
+              <table className="box" style={{ margin: '20px 0', fontSize: '12px' }}>
+                <thead><tr><th style={{ width: '180px' }}>Revenue stream</th><th>Mechanism</th><th>Status</th></tr></thead>
+                <tbody>
+                  {[
+                    ['Resolution fee',         '2% of the total staked pool, collected automatically on settlement', 'Implemented', 'var(--green)'],
+                    ['Pay-per-call forecasts',  'x402 micropayment for premium, cited forecasts consumed by other agents', 'Planned', 'var(--muted)'],
+                    ['Private/custom markets',  'Subscription tier for bespoke bundle markets', 'Roadmap', 'var(--muted)'],
+                    ['Revenue share',           'Share of resolution fees returned to a market\'s original creator', 'Roadmap', 'var(--muted)'],
+                  ].map(([name, mech, status, color]) => (
+                    <tr key={name}>
+                      <td className="mono" style={{ fontWeight: '600' }}>{name}</td>
+                      <td>{mech}</td>
+                      <td style={{ color, fontWeight: '600' }}>{status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="mono" style={{ fontSize: '10px', color: 'var(--muted)', textAlign: 'center', marginBottom: '20px' }}>Table 2: Revenue mechanisms by implementation status.</div>
           </section>
 
           <section id="sec-asp" style={sectionStyle}>
@@ -230,7 +234,7 @@ export default function Whitepaper(): React.ReactElement {
 
           <section id="sec-conclusion" style={sectionStyle}>
             <h3 className="display" style={h3Style}>11. Conclusion</h3>
-            <p>GamesOracle AI demonstrates that a prediction market can be both explainable and autonomous — pricing an event with visible reasoning, then settling it without manual intervention. The Glasgow 2026 Commonwealth Games deployment is a proving ground for an architecture intended to generalize well beyond a single competition, and beyond sports altogether.</p>
+            <p>GamesOracle AI demonstrates that a prediction market can be both explainable and autonomous: pricing an event with visible reasoning, then settling it without manual intervention. The Glasgow 2026 Commonwealth Games deployment is a proving ground for an architecture intended to generalize well beyond a single competition, and beyond sports altogether.</p>
           </section>
         </article>
       </div>

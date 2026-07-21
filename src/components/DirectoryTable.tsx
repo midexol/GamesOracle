@@ -92,73 +92,75 @@ export default function DirectoryTable({
 
   return (
     <div className="markets-container hard-shadow">
-      <table className="markets">
-        <thead>
-          <tr>
-            <th style={{ width: 32 }}></th>
-            <th>Sport</th>
-            <th>Market</th>
-            <th style={{ minWidth: 170 }}>AI vs. Line</th>
-            <th>Confidence</th>
-            <th>Vol.</th>
-            <th>Closes</th>
-          </tr>
-        </thead>
-        <motion.tbody
-          variants={tableContainerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {markets.length === 0 ? (
+      <div className="table-responsive" style={{ margin: 0 }}>
+        <table className="markets">
+          <thead>
             <tr>
-              <td colSpan={7} style={{ textAlign: 'center', padding: '24px 0', color: 'var(--muted)' }}>
-                No open markets in this section.
-              </td>
+              <th style={{ width: 32 }}></th>
+              <th>Sport</th>
+              <th>Market</th>
+              <th style={{ minWidth: 170 }}>AI vs. Line</th>
+              <th>Confidence</th>
+              <th>Vol.</th>
+              <th>Closes</th>
             </tr>
-          ) : (
-            markets.map(m => {
-              const volNum = parseInt(m.vol.replace(/,/g, ''), 10) || 0;
-              const volPct = Math.round((volNum / maxVol) * 100);
-              const isHighEdge = Math.abs(m.prob - m.line) >= 5;
+          </thead>
+          <motion.tbody
+            variants={tableContainerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {markets.length === 0 ? (
+              <tr>
+                <td colSpan={7} style={{ textAlign: 'center', padding: '24px 0', color: 'var(--muted)' }}>
+                  No open markets in this section.
+                </td>
+              </tr>
+            ) : (
+              markets.map(m => {
+                const volNum = parseInt(m.vol.replace(/,/g, ''), 10) || 0;
+                const volPct = Math.round((volNum / maxVol) * 100);
+                const isHighEdge = Math.abs(m.prob - m.line) >= 5;
 
-              return (
-                <motion.tr
-                  key={m.id}
-                  variants={rowVariants}
-                  className={m.id === newMarketId ? 'row-new' : ''}
-                  onClick={() => onMarketClick(m)}
-                  whileHover={{ backgroundColor: 'var(--paper-2)' }}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <td style={{ fontSize: '16px', paddingRight: 0 }}>
-                    {SPORT_EMOJI[m.sport] ?? '📊'}
-                  </td>
-                  <td className="tag">{m.sport}</td>
-                  <td className="question">
-                    {m.title}
-                    {isHighEdge && (
-                      <span className="edge-flag">EDGE</span>
-                    )}
-                  </td>
-                  <td>
-                    <DualRail prob={m.prob} line={m.line} animated />
-                  </td>
-                  <td>
-                    <span className="confidence-badge">{m.confidence}%</span>
-                  </td>
-                  <td>
-                    <div>{m.vol} USDT</div>
-                    <div className="vol-bar">
-                      <div className="vol-fill" style={{ width: `${volPct}%` }} />
-                    </div>
-                  </td>
-                  <td className="mono" style={{ fontSize: '11px', color: 'var(--muted)' }}>{m.close}</td>
-                </motion.tr>
-              );
-            })
-          )}
-        </motion.tbody>
-      </table>
+                return (
+                  <motion.tr
+                    key={m.id}
+                    variants={rowVariants}
+                    className={m.id === newMarketId ? 'row-new' : ''}
+                    onClick={() => onMarketClick(m)}
+                    whileHover={{ backgroundColor: 'var(--paper-2)' }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <td style={{ fontSize: '16px', paddingRight: 0 }}>
+                      {SPORT_EMOJI[m.sport] ?? '📊'}
+                    </td>
+                    <td className="tag">{m.sport}</td>
+                    <td className="question">
+                      {m.title}
+                      {isHighEdge && (
+                        <span className="edge-flag">EDGE</span>
+                      )}
+                    </td>
+                    <td>
+                      <DualRail prob={m.prob} line={m.line} animated />
+                    </td>
+                    <td>
+                      <span className="confidence-badge">{m.confidence}%</span>
+                    </td>
+                    <td>
+                      <div>{m.vol} USDT</div>
+                      <div className="vol-bar">
+                        <div className="vol-fill" style={{ width: `${volPct}%` }} />
+                      </div>
+                    </td>
+                    <td className="mono" style={{ fontSize: '11px', color: 'var(--muted)' }}>{m.close}</td>
+                  </motion.tr>
+                );
+              })
+            )}
+          </motion.tbody>
+        </table>
+      </div>
     </div>
   );
 }

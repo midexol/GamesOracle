@@ -98,111 +98,115 @@ export default function Ledger({ ledger, platformFees }: LedgerProps): React.Rea
         <h2>Open Positions</h2>
         <span className="sub">{openPositions.length} ACTIVE</span>
       </div>
-      <table className="ledger">
-        <thead>
-          <tr>
-            <th>Sport</th><th>Market</th><th>Side</th><th>Staked</th><th>Status</th>
-          </tr>
-        </thead>
-        <motion.tbody initial="hidden" animate="visible">
-          {openPositions.length === 0 ? (
+      <div className="table-responsive">
+        <table className="ledger">
+          <thead>
             <tr>
-              <td colSpan={5} style={{ textAlign: 'center', padding: '24px 0', color: 'var(--muted)' }}>
-                No active positions. Clip &amp; Stake on a Dispatch page to trade.
-              </td>
+              <th>Sport</th><th>Market</th><th>Side</th><th>Staked</th><th>Status</th>
             </tr>
-          ) : openPositions.map((pos, i) => (
-            <motion.tr key={i} custom={i} variants={rowVariants}>
-              <td>{pos.sport}</td>
-              <td className="q">{pos.marketTitle}</td>
-              <td>
-                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700,
-                  color: pos.side === 'YES' ? 'var(--green)' : 'var(--red)' }}>
-                  {pos.side === 'YES' ? '▲' : '▼'} {pos.side}
-                </span>
-              </td>
-              <td>{pos.staked}</td>
-              <td className="status open">Awaiting result</td>
-            </motion.tr>
-          ))}
-        </motion.tbody>
-      </table>
+          </thead>
+          <motion.tbody initial="hidden" animate="visible">
+            {openPositions.length === 0 ? (
+              <tr>
+                <td colSpan={5} style={{ textAlign: 'center', padding: '24px 0', color: 'var(--muted)' }}>
+                  No active positions. Clip &amp; Stake on a Dispatch page to trade.
+                </td>
+              </tr>
+            ) : openPositions.map((pos, i) => (
+              <motion.tr key={i} custom={i} variants={rowVariants}>
+                <td>{pos.sport}</td>
+                <td className="q">{pos.marketTitle}</td>
+                <td>
+                  <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700,
+                    color: pos.side === 'YES' ? 'var(--green)' : 'var(--red)' }}>
+                    {pos.side === 'YES' ? '▲' : '▼'} {pos.side}
+                  </span>
+                </td>
+                <td>{pos.staked}</td>
+                <td className="status open">Awaiting result</td>
+              </motion.tr>
+            ))}
+          </motion.tbody>
+        </table>
+      </div>
 
       {/* ── Resolved History ─────────────────────────────── */}
       <div className="col-head">
         <h2>Resolved History</h2>
         <span className="sub">LAST 30 DAYS</span>
       </div>
-      <table className="ledger">
-        <thead>
-          <tr>
-            <th>Sport</th><th>Market</th><th>Side</th><th>Staked</th>
-            <th>Result</th><th>P&amp;L</th><th>Chain</th><th></th>
-          </tr>
-        </thead>
-        <motion.tbody initial="hidden" animate="visible">
-          {resolvedHistory.length === 0 ? (
+      <div className="table-responsive">
+        <table className="ledger">
+          <thead>
             <tr>
-              <td colSpan={8} style={{ textAlign: 'center', padding: '24px 0', color: 'var(--muted)' }}>
-                No resolved history yet.
-              </td>
+              <th>Sport</th><th>Market</th><th>Side</th><th>Staked</th>
+              <th>Result</th><th>P&amp;L</th><th>Chain</th><th></th>
             </tr>
-          ) : resolvedHistory.map((hist, i) => {
-            const pnlNum  = parseFloat(hist.pnl ?? '0');
-            const claimed = claimedIds.has(i);
-            const claimTx = claimTxMap[i];
+          </thead>
+          <motion.tbody initial="hidden" animate="visible">
+            {resolvedHistory.length === 0 ? (
+              <tr>
+                <td colSpan={8} style={{ textAlign: 'center', padding: '24px 0', color: 'var(--muted)' }}>
+                  No resolved history yet.
+                </td>
+              </tr>
+            ) : resolvedHistory.map((hist, i) => {
+              const pnlNum  = parseFloat(hist.pnl ?? '0');
+              const claimed = claimedIds.has(i);
+              const claimTx = claimTxMap[i];
 
-            return (
-              <motion.tr key={i} custom={i} variants={rowVariants}>
-                <td>{hist.sport}</td>
-                <td className="q">{hist.marketTitle}</td>
-                <td style={{ fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600 }}>{hist.side}</td>
-                <td>{hist.staked}</td>
-                <td className={`status ${hist.status}`}>{hist.result}</td>
-                <td className={`pnl ${pnlNum >= 0 ? 'pos' : 'neg'}`}>
-                  {pnlNum >= 0 ? `+${pnlNum.toFixed(2)}` : pnlNum.toFixed(2)}
-                </td>
-                <td>
-                  <span className="chain-badge">
-                    X Layer
-                  </span>
-                </td>
-                <td>
-                  <AnimatePresence mode="wait">
-                    {hist.status === 'won' && !claimed ? (
-                      <motion.button
-                        key="claim"
-                        className="claim-btn"
-                        onClick={() => handleClaim(i, hist)}
-                        whileTap={{ scale: 0.95 }}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                      >
-                        Claim
-                      </motion.button>
-                    ) : claimed ? (
-                      <motion.a
-                        key="tx"
-                        href={`${X_LAYER_EXPLORER}${claimTx}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="chain-badge"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        title={claimTx}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <ExternalLink size={8} style={{ marginRight: 2 }} />
-                        Claimed
-                      </motion.a>
-                    ) : null}
-                  </AnimatePresence>
-                </td>
-              </motion.tr>
-            );
-          })}
-        </motion.tbody>
-      </table>
+              return (
+                <motion.tr key={i} custom={i} variants={rowVariants}>
+                  <td>{hist.sport}</td>
+                  <td className="q">{hist.marketTitle}</td>
+                  <td style={{ fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600 }}>{hist.side}</td>
+                  <td>{hist.staked}</td>
+                  <td className={`status ${hist.status}`}>{hist.result}</td>
+                  <td className={`pnl ${pnlNum >= 0 ? 'pos' : 'neg'}`}>
+                    {pnlNum >= 0 ? `+${pnlNum.toFixed(2)}` : pnlNum.toFixed(2)}
+                  </td>
+                  <td>
+                    <span className="chain-badge">
+                      X Layer
+                    </span>
+                  </td>
+                  <td>
+                    <AnimatePresence mode="wait">
+                      {hist.status === 'won' && !claimed ? (
+                        <motion.button
+                          key="claim"
+                          className="claim-btn"
+                          onClick={() => handleClaim(i, hist)}
+                          whileTap={{ scale: 0.95 }}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                        >
+                          Claim
+                        </motion.button>
+                      ) : claimed ? (
+                        <motion.a
+                          key="tx"
+                          href={`${X_LAYER_EXPLORER}${claimTx}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="chain-badge"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          title={claimTx}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <ExternalLink size={8} style={{ marginRight: 2 }} />
+                          Claimed
+                        </motion.a>
+                      ) : null}
+                    </AnimatePresence>
+                  </td>
+                </motion.tr>
+              );
+            })}
+          </motion.tbody>
+        </table>
+      </div>
 
       {/* ── Fee Strip ────────────────────────────────────── */}
       <div className="fee-strip">
