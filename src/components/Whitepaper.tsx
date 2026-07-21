@@ -227,7 +227,6 @@ export default function Whitepaper(): React.ReactElement {
             <ul style={{ paddingLeft: '20px', marginBottom: '16px' }}>
               <li><strong>Resolution-source reliability:</strong> No confirmed low-latency official results API has been secured at time of writing; near-term markets may rely on manually curated results.</li>
               <li><strong>Regulatory compliance:</strong> Prediction markets intersect gambling regulation in many jurisdictions; scope and geographic availability should be reviewed before any mainnet launch.</li>
-              <li><strong>Naming options:</strong> "GamesOracle AI" is a working name pending a final branding decision.</li>
               <li><strong>Oracle centralization:</strong> The agent is currently the sole resolver for each market; a multi-oracle fallback is necessary before handling high-value volumes.</li>
             </ul>
           </section>

@@ -1699,6 +1699,51 @@ table.box td.ai {
     padding: 10px 16px;
     text-align: center;
   }
+
+  /* Page margins and spacing */
+  .wrap {
+    padding: 0 16px;
+  }
+  
+  .article {
+    padding: 24px 16px 40px;
+  }
+  
+  h2.headline {
+    font-size: 26px;
+  }
+
+  h1.display {
+    font-size: 34px !important;
+  }
+
+  /* Horizontal swipeable sub-navigation */
+  nav.subnav {
+    gap: 16px;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  nav.subnav::-webkit-scrollbar {
+    display: none;
+  }
+  nav.subnav a {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  /* Centered and polished connect button for mobile headers */
+  .masthead {
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .wallet-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
 }
 
 

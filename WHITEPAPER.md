@@ -142,7 +142,6 @@ Event-agnostic expansion beyond sports, multi-oracle consensus and community dis
 
 * **Resolution-source reliability:** no confirmed low-latency official results API has been secured at time of writing; near-term markets may rely on manually curated results.
 * **Regulatory:** prediction markets intersect gambling regulation in many jurisdictions; scope and geographic availability should be reviewed before any mainnet, real-value launch.
-* **Naming:** "GamesOracle AI" is a working name pending a final decision (see accompanying brand discussion).
 * **Oracle centralization:** the agent is currently the sole resolver for each market; a multi-oracle or dispute-vote fallback is necessary before handling non-trivial stake sizes.
 
 ---
