@@ -81,7 +81,8 @@ export default function DirectoryTable({
 
   return (
     <div className="markets-container hard-shadow">
-      <div className="table-responsive" style={{ margin: 0 }}>
+      {/* Desktop Table View (≥769px) */}
+      <div className="desktop-markets-view table-responsive" style={{ margin: 0 }}>
         <table className="markets">
           <thead>
             <tr>
@@ -145,6 +146,43 @@ export default function DirectoryTable({
             )}
           </motion.tbody>
         </table>
+      </div>
+
+      {/* Mobile News Wire Cards View (<769px) */}
+      <div className="mobile-markets-view">
+        {markets.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '24px 0', color: 'var(--muted)', fontSize: '13px' }}>
+            No open markets in this section.
+          </div>
+        ) : (
+          markets.map(m => {
+            const isHighEdge = Math.abs(m.prob - m.line) >= 5;
+            return (
+              <div
+                key={m.id}
+                className={`mobile-market-card ${m.id === newMarketId ? 'row-new' : ''}`}
+                onClick={() => onMarketClick(m)}
+              >
+                <div className="mobile-card-header">
+                  <span className="tag">{m.sport}</span>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                    {isHighEdge && <span className="edge-flag">EDGE</span>}
+                    <span className="mono" style={{ fontSize: '11px', color: 'var(--muted)' }}>Closes {m.close}</span>
+                  </div>
+                </div>
+
+                <div className="mobile-card-title">{m.title}</div>
+
+                <DualRail prob={m.prob} line={m.line} animated />
+
+                <div className="mobile-card-footer">
+                  <span>Confidence: <strong style={{ color: 'var(--ink)' }}>{m.confidence}%</strong></span>
+                  <span>Vol: <strong style={{ color: 'var(--ink)' }}>{m.vol} USDT</strong></span>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );

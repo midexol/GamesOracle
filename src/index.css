@@ -1831,28 +1831,56 @@ table.box td.ai {
     background: transparent !important;
   }
 
-  table.markets thead {
+  .desktop-markets-view {
     display: none !important;
   }
-
-  table.markets, table.markets tbody, table.markets tr, table.markets td {
+  
+  .mobile-markets-view {
     display: block !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
   }
 
-  table.markets tr {
-    border: 1px solid var(--ink) !important;
-    border-left: 4px solid var(--purple) !important;
-    padding: 12px 14px !important;
-    margin-bottom: 12px !important;
-    background: var(--paper-2) !important;
-    box-shadow: 2px 2px 0 0 var(--ink) !important;
+  .mobile-market-card {
+    background: var(--paper-2);
+    border: 1px solid var(--ink);
+    border-left: 4px solid var(--purple);
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    box-shadow: 2px 2px 0 0 var(--ink);
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
   }
 
-  table.markets td {
-    padding: 2px 0 !important;
-    border: none !important;
+  .mobile-market-card:active {
+    transform: scale(0.99);
+    background: var(--paper);
+  }
+
+  .mobile-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .mobile-card-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .mobile-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px dashed var(--rule);
+    padding-top: 8px;
+    margin-top: 10px;
   }
 
   table.markets td.tag {

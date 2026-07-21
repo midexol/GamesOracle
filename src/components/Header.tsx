@@ -80,10 +80,6 @@ export default function Header({
       {/* ── Masthead ─────────────────────────────────────── */}
       {isLanding ? (
         <div className="masthead center-mode">
-          <div className="kicker">
-            <span className="live-dot" />
-            Live wire — Commonwealth Games 2026, Glasgow
-          </div>
           <h1 className="display">GAMESORACLE</h1>
           <div className="tagline">"An AI oracle, priced and printed for every medal in Glasgow."</div>
           <nav className="subnav">
@@ -124,10 +120,6 @@ export default function Header({
         <div className="masthead">
           <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
             <div>
-              <div className="kicker">
-                <Wifi size={10} style={{ marginRight: '4px', verticalAlign: 'middle' }} />
-                Live
-              </div>
               <h1 className="display" style={{ cursor: 'pointer' }} onClick={() => onNavigate('landing')}>
                 GamesOracle
               </h1>
