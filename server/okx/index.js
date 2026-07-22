@@ -35,17 +35,19 @@ router.all('/get_markets', (req, res) => {
   res.json({ markets: results });
 });
 
-// get_forecast — paid.
-router.post('/get_forecast', requirePayment(0.02, 'GamesOracle: get_forecast — 0.02 USDT0'), (req, res) => {
-  const { market_id } = req.body || {};
+// get_forecast — paid. router.all so an OKX reachability probe (GET, no body)
+// gets the 402 challenge instead of a bare 404 — same bug that got Pantr's
+// /user route rejected (POST-only route probed with GET).
+router.all('/get_forecast', requirePayment(0.02, 'GamesOracle: get_forecast — 0.02 USDT0'), (req, res) => {
+  const { market_id } = req.method === 'GET' ? req.query : (req.body || {});
   const market = findMarket(market_id);
   if (!market) return res.status(404).json({ error: 'market not found' });
   res.json({ prob: market.prob, confidence: market.confidence, reasoning: market.reasoning });
 });
 
-// create_market — paid.
-router.post('/create_market', requirePayment(0.05, 'GamesOracle: create_market — 0.05 USDT0'), async (req, res) => {
-  const { question, sport, event } = req.body || {};
+// create_market — paid. Same GET-tolerance reasoning as get_forecast above.
+router.all('/create_market', requirePayment(0.05, 'GamesOracle: create_market — 0.05 USDT0'), async (req, res) => {
+  const { question, sport, event } = req.method === 'GET' ? req.query : (req.body || {});
   if (!question || !sport) return res.status(400).json({ error: 'question and sport are required' });
   try {
     const title = event || question;
