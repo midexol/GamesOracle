@@ -1,6 +1,6 @@
 // Client for the GamesOracle Agent Brain backend (server/).
-// Point this at the deployed brain URL for production builds.
-const BRAIN_URL = 'http://localhost:8787';
+// Set BRAIN_URL in .env for production builds; falls back to local dev server.
+const BRAIN_URL = process.env.BRAIN_URL || 'http://localhost:8787';
 
 export interface Forecast {
   prob: number;
