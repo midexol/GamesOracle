@@ -12,6 +12,7 @@ import Verdicts from './components/Verdicts';
 import Accuracy from './components/Accuracy';
 import ApiDocs  from './components/ApiDocs';
 import type { Market, LedgerPosition, AppTab, ScheduleEvent } from './types';
+import { fetchForecast } from './lib/brain';
 
 // ── Page animation variants ───────────────────────────────
 const pageVariants: Variants = {
@@ -62,23 +63,33 @@ export default function App(): React.ReactElement {
 
   const handleAddPosition = (pos: LedgerPosition) => setLedger(prev => [pos, ...prev]);
 
-  const handleRequestMarket = (event: ScheduleEvent) => {
+  const handleRequestMarket = async (event: ScheduleEvent) => {
     const exists = markets.some(m => m.title.toLowerCase().includes(event.eventTitle.toLowerCase().split(',')[0].toLowerCase()));
     if (exists) return;
 
-    const newMarket: Market = {
-      id: `market-${Date.now()}`,
+    const id = `market-${Date.now()}`;
+    // Placeholder while the brain prices it, so the UI reacts immediately.
+    setMarkets(prev => [{
+      id,
       sport: event.sport,
       title: event.eventTitle,
-      prob: Math.floor(Math.random() * 40) + 30,
-      line: Math.floor(Math.random() * 40) + 30,
+      prob: 50,
+      line: 50,
       vol: '0',
       close: '2d',
-      confidence: Math.floor(Math.random() * 20) + 65,
+      confidence: 0,
       isNew: true,
-      reasoning: `This bespoke market was generated dynamically on user request from the Glasgow schedule wire. GamesOracle AI has ingested competitor form data for ${event.eventTitle} and priced it with an explainable confidence weighting.`
-    };
-    setMarkets(prev => [newMarket, ...prev]);
+      reasoning: 'Pricing in progress…',
+    }, ...prev]);
+
+    try {
+      const forecast = await fetchForecast(event.sport, event.eventTitle);
+      setMarkets(prev => prev.map(m => m.id === id ? { ...m, ...forecast } : m));
+    } catch {
+      setMarkets(prev => prev.map(m => m.id === id
+        ? { ...m, reasoning: 'The Oracle brain was unreachable — this market is unpriced. Try refreshing.' }
+        : m));
+    }
   };
 
   const getOrientationText = () => {

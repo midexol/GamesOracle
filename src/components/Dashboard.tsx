@@ -70,6 +70,7 @@ export default function Dashboard({
       <div className="side-col">
         {/* Cable to the Oracle chat */}
         <CableToOracle
+          markets={markets}
           setMarkets={setMarkets}
           onNewMarketId={(id) => {
             setNewMarketId(id);

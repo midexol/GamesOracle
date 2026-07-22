@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: gamesoracle-brain
+    runtime: node
+    rootDir: server
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /okx/
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GAMESORACLE_TREASURY
+        sync: false
