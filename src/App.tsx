@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import Header   from './components/Header';
 import Landing  from './components/Landing';
-import Start    from './components/Start';
 import Dashboard from './components/Dashboard';
 import MarketDetail from './components/MarketDetail';
 import Ledger   from './components/Ledger';
@@ -108,8 +107,6 @@ export default function App(): React.ReactElement {
 
   const getOrientationText = () => {
     switch (activeTab) {
-      case 'start':
-        return <>Begin here to complete age/jurisdiction attestation and connect your OKX wallet — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'landing':
         return <>Welcome to GamesOracle AI. Browse live prediction markets or read our agent listing — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'markets':
