@@ -41,13 +41,27 @@ const INITIAL_LEDGER: LedgerPosition[] = [
 ];
 
 export default function App(): React.ReactElement {
-  const [activeTab,       setActiveTab]       = useState<AppTab>('start');
+  const [activeTab,       setActiveTab]       = useState<AppTab>('landing');
   const [walletConnected, setWalletConnected] = useState(false);
   const [platformFees,    setPlatformFees]    = useState(184.20);
   const [selectedMarket,  setSelectedMarket]  = useState<Market | null>(null);
   const [markets,         setMarkets]         = useState<Market[]>(INITIAL_MARKETS);
   const [ledger,          setLedger]          = useState<LedgerPosition[]>(INITIAL_LEDGER);
   const [showHowItWorks,  setShowHowItWorks]  = useState(false);
+
+  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+  const [hasAgreedOnboarding, setHasAgreedOnboarding] = useState(false);
+  const [displayNameInput, setDisplayNameInput] = useState('');
+  const [profileName, setProfileName] = useState('');
+
+  const handleConnectWalletClick = () => {
+    if (walletConnected) {
+      setWalletConnected(false);
+      setProfileName('');
+    } else {
+      setShowOnboardingModal(true);
+    }
+  };
 
   // Live fee accumulation
   useEffect(() => {
@@ -117,7 +131,7 @@ export default function App(): React.ReactElement {
         activeTab={activeTab}
         onNavigate={handleNavigate}
         walletConnected={walletConnected}
-        onConnectWallet={() => setWalletConnected(c => !c)}
+        onConnectWallet={handleConnectWalletClick}
         walletAddress={walletAddress}
         platformFees={platformFees}
         onOpenHowItWorks={() => setShowHowItWorks(true)}
@@ -136,20 +150,11 @@ export default function App(): React.ReactElement {
           animate="animate"
           exit="exit"
         >
-          {activeTab === 'start' && (
-            <Start
-              onNavigate={handleNavigate}
-              walletConnected={walletConnected}
-              onConnectWallet={() => setWalletConnected(c => !c)}
-              walletAddress={walletAddress}
-            />
-          )}
-
           {activeTab === 'landing' && (
             <Landing
               onNavigate={handleNavigate}
               walletConnected={walletConnected}
-              onConnectWallet={() => setWalletConnected(c => !c)}
+              onConnectWallet={handleConnectWalletClick}
               walletAddress={walletAddress}
             />
           )}
@@ -169,6 +174,8 @@ export default function App(): React.ReactElement {
             <MarketDetail
               selectedMarket={selectedMarket}
               onAddPosition={handleAddPosition}
+              walletConnected={walletConnected}
+              onConnectWallet={handleConnectWalletClick}
             />
           )}
 
@@ -196,6 +203,108 @@ export default function App(): React.ReactElement {
       </AnimatePresence>
 
       <AnimatePresence>
+        {showOnboardingModal && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowOnboardingModal(false)}
+          >
+            <motion.div
+              className="modal-card"
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              onClick={(e) => e.stopPropagation()}
+              style={{ maxWidth: '480px' }}
+            >
+              <button className="modal-close" onClick={() => setShowOnboardingModal(false)}>
+                ✕
+              </button>
+
+              <div className="mono" style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--purple)', marginBottom: '8px', fontWeight: '600' }}>
+                Account Setup & Attestation
+              </div>
+              <h2 className="display" style={{ margin: '0 0 16px', fontSize: '24px', borderBottom: '2px solid var(--ink)', paddingBottom: '8px' }}>
+                Connect Wallet
+              </h2>
+
+              <p style={{ fontSize: '13px', lineHeight: '1.5', color: 'var(--muted)', marginBottom: '20px' }}>
+                To participate in prediction markets, please verify your age and complete the attestation step.
+              </p>
+
+              {/* Nickname Input */}
+              <div style={{ marginBottom: '18px' }}>
+                <label className="mono" style={{ display: 'block', fontSize: '10.5px', textTransform: 'uppercase', marginBottom: '6px', fontWeight: 'bold' }}>
+                  Optional Display Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. SportsGenius_99"
+                  value={displayNameInput}
+                  onChange={(e) => setDisplayNameInput(e.target.value)}
+                  className="mono"
+                  style={{
+                    width: '100%',
+                    padding: '8px 10px',
+                    border: '2px solid var(--ink)',
+                    fontSize: '12px',
+                    background: 'var(--paper)',
+                    outline: 'none',
+                  }}
+                />
+              </div>
+
+              {/* Age / Checkbox Check */}
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', marginBottom: '24px' }}>
+                <input
+                  type="checkbox"
+                  id="onboard-agree-checkbox"
+                  checked={hasAgreedOnboarding}
+                  onChange={(e) => setHasAgreedOnboarding(e.target.checked)}
+                  style={{ marginTop: '3px', cursor: 'pointer' }}
+                />
+                <label htmlFor="onboard-agree-checkbox" style={{ fontSize: '12px', lineHeight: '1.45', cursor: 'pointer', color: 'var(--ink)' }}>
+                  I certify that I am <strong>18 years of age or older</strong>, and that participating in stake-based prediction markets is permitted under my local jurisdiction's rules.
+                </label>
+              </div>
+
+              {/* Connect Button */}
+              <button
+                onClick={() => {
+                  setWalletConnected(true);
+                  if (displayNameInput.trim()) {
+                    setProfileName(displayNameInput.trim());
+                  }
+                  setShowOnboardingModal(false);
+                }}
+                disabled={!hasAgreedOnboarding}
+                className="wallet-btn hard-shadow-sm"
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  background: hasAgreedOnboarding ? 'var(--purple)' : '#D6D1C6',
+                  color: hasAgreedOnboarding ? '#FFF' : 'var(--muted)',
+                  borderColor: 'var(--ink)',
+                  borderWidth: '2px',
+                  cursor: hasAgreedOnboarding ? 'pointer' : 'not-allowed',
+                  opacity: hasAgreedOnboarding ? 1 : 0.7,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                }}
+              >
+                ⬡ Connect OKX Wallet
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+
         {showHowItWorks && (
           <motion.div
             className="modal-overlay"

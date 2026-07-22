@@ -10,6 +10,8 @@ import type { Market, LedgerPosition } from '../types';
 interface BettingCouponProps {
   market:        Market;
   onAddPosition: (pos: LedgerPosition) => void;
+  walletConnected: boolean;
+  onConnectWallet: () => void;
 }
 
 const STAKE_OPTIONS = [5, 20, 50] as const;
@@ -21,7 +23,7 @@ interface BetResult {
   txHash: string;
 }
 
-export default function BettingCoupon({ market, onAddPosition }: BettingCouponProps): React.ReactElement {
+export default function BettingCoupon({ market, onAddPosition, walletConnected, onConnectWallet }: BettingCouponProps): React.ReactElement {
   const { stake } = useEscrow();
   const [selectedStake, setSelectedStake] = useState<StakeOption>(20);
   const [betResult,     setBetResult]     = useState<BetResult | null>(null);
@@ -96,24 +98,37 @@ export default function BettingCoupon({ market, onAddPosition }: BettingCouponPr
       </div>
 
       {/* YES / NO buttons */}
-      <motion.button
-        className={clsx('side-btn', 'yes', { 'loading': isLoading })}
-        onClick={() => handlePlaceBet('YES')}
-        whileTap={{ scale: 0.98, y: 2 }}
-        disabled={isLoading}
-        style={{ marginBottom: '8px' }}
-      >
-        {isLoading ? 'Filing…' : `▲ Back YES — ${selectedStake} USDT`}
-      </motion.button>
+      {!walletConnected ? (
+        <motion.button
+          className="side-btn yes"
+          onClick={onConnectWallet}
+          whileTap={{ scale: 0.98, y: 2 }}
+          style={{ width: '100%', background: 'var(--purple)', color: '#FFF', borderColor: 'var(--ink)' }}
+        >
+          ⬡ Connect Wallet to Stake
+        </motion.button>
+      ) : (
+        <>
+          <motion.button
+            className={clsx('side-btn', 'yes', { 'loading': isLoading })}
+            onClick={() => handlePlaceBet('YES')}
+            whileTap={{ scale: 0.98, y: 2 }}
+            disabled={isLoading}
+            style={{ marginBottom: '8px' }}
+          >
+            {isLoading ? 'Filing…' : `▲ Back YES — ${selectedStake} USDT`}
+          </motion.button>
 
-      <motion.button
-        className={clsx('side-btn', 'no', { 'loading': isLoading })}
-        onClick={() => handlePlaceBet('NO')}
-        whileTap={{ scale: 0.98, y: 2 }}
-        disabled={isLoading}
-      >
-        {isLoading ? 'Filing…' : `▼ Back NO / Field — ${selectedStake} USDT`}
-      </motion.button>
+          <motion.button
+            className={clsx('side-btn', 'no', { 'loading': isLoading })}
+            onClick={() => handlePlaceBet('NO')}
+            whileTap={{ scale: 0.98, y: 2 }}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Filing…' : `▼ Back NO / Field — ${selectedStake} USDT`}
+          </motion.button>
+        </>
+      )}
 
       <div className="coupon-payout-explainer">
         Locked in escrow. If your side wins, you're paid automatically in USDT straight to your connected wallet when the result is confirmed — no claim step required.

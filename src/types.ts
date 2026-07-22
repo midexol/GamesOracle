@@ -30,7 +30,7 @@ export interface ChatMessage {
   text:   string;
 }
 
-export type AppTab = 'start' | 'landing' | 'markets' | 'dispatch' | 'ledger' | 'whitepaper' | 'schedule' | 'verdicts' | 'accuracy' | 'api';
+export type AppTab = 'landing' | 'markets' | 'dispatch' | 'ledger' | 'whitepaper' | 'schedule' | 'verdicts' | 'accuracy' | 'api';
 
 export interface ScheduleEvent {
   id:          string;

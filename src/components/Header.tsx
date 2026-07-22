@@ -85,41 +85,40 @@ export default function Header({
           <h1 className="display">GAMESORACLE</h1>
           <div className="tagline">"An AI oracle, priced and printed for every medal in Glasgow."</div>
           <nav className="subnav">
-            <a onClick={() => onNavigate('start')} className={activeTab === 'start' ? 'active' : ''}>
-              <span className="title">Start Here</span>
-              <span className="sub">Begin onboarding</span>
+            <a onClick={() => onNavigate('landing')} className={activeTab === 'landing' ? 'active' : ''}>
+              <span className="title">Home</span>
+              <span className="sub">About project</span>
             </a>
             <a onClick={() => onNavigate('markets')} className="live">
               <span className="title">Markets</span>
               <span className="sub">Browse & bet</span>
             </a>
-            <a onClick={() => onNavigate('schedule')}>
-              <span className="title">Schedule</span>
-              <span className="sub">Games calendar</span>
-            </a>
-            <a onClick={() => onNavigate('verdicts')}>
-              <span className="title">Verdicts</span>
-              <span className="sub">Settled payouts</span>
-            </a>
             <a onClick={() => onNavigate('ledger')}>
               <span className="title">Ledger</span>
               <span className="sub">Your bets</span>
-            </a>
-            <a onClick={() => onNavigate('accuracy')}>
-              <span className="title">Accuracy</span>
-              <span className="sub">Calibration</span>
             </a>
             <a onClick={() => onNavigate('whitepaper')}>
               <span className="title">Whitepaper</span>
               <span className="sub">Tech draft</span>
             </a>
-            <a onClick={() => onNavigate('api')}>
-              <span className="title">API Docs</span>
-              <span className="sub">Developer tools</span>
-            </a>
             <button className="how-it-works-btn hard-shadow-sm" style={{ padding: '6px 12px', fontSize: '10px', height: 'fit-content', alignSelf: 'center', marginLeft: '12px', marginRight: 0 }} onClick={onOpenHowItWorks}>
               How It Works
             </button>
+          </nav>
+
+          <nav className="subnav-secondary">
+            <a onClick={() => onNavigate('schedule')} className={activeTab === 'schedule' ? 'active' : ''}>
+              <span className="title">Schedule</span>
+            </a>
+            <a onClick={() => onNavigate('verdicts')} className={activeTab === 'verdicts' ? 'active' : ''}>
+              <span className="title">Verdicts</span>
+            </a>
+            <a onClick={() => onNavigate('accuracy')} className={activeTab === 'accuracy' ? 'active' : ''}>
+              <span className="title">Accuracy</span>
+            </a>
+            <a onClick={() => onNavigate('api')} className={activeTab === 'api' ? 'active' : ''}>
+              <span className="title">API Docs</span>
+            </a>
           </nav>
         </div>
       ) : (
@@ -131,44 +130,41 @@ export default function Header({
               </h1>
             </div>
           </div>
-          <nav className="subnav">
-            <a onClick={() => onNavigate('start')} className={activeTab === 'start' ? 'active' : ''}>
-              <span className="title">Start Here</span>
-              <span className="sub">Begin onboarding</span>
-            </a>
-            <a onClick={() => onNavigate('landing')} className={activeTab === 'landing' ? 'active' : ''}>
-              <span className="title">Home</span>
-              <span className="sub">About project</span>
-            </a>
-            <a onClick={() => onNavigate('markets')}    className={activeTab === 'markets'    ? 'active' : ''}>
-              <span className="title">Markets</span>
-              <span className="sub">Browse & bet</span>
-            </a>
-            <a onClick={() => onNavigate('schedule')}   className={activeTab === 'schedule'   ? 'active' : ''}>
-              <span className="title">Schedule</span>
-              <span className="sub">Games calendar</span>
-            </a>
-            <a onClick={() => onNavigate('verdicts')}   className={activeTab === 'verdicts'   ? 'active' : ''}>
-              <span className="title">Verdicts</span>
-              <span className="sub">Settled payouts</span>
-            </a>
-            <a onClick={() => onNavigate('ledger')}     className={activeTab === 'ledger'     ? 'active' : ''}>
-              <span className="title">Ledger</span>
-              <span className="sub">Your bets</span>
-            </a>
-            <a onClick={() => onNavigate('accuracy')}   className={activeTab === 'accuracy'   ? 'active' : ''}>
-              <span className="title">Accuracy</span>
-              <span className="sub">Calibration</span>
-            </a>
-            <a onClick={() => onNavigate('whitepaper')} className={activeTab === 'whitepaper' ? 'active' : ''}>
-              <span className="title">Whitepaper</span>
-              <span className="sub">Tech draft</span>
-            </a>
-            <a onClick={() => onNavigate('api')}        className={activeTab === 'api'        ? 'active' : ''}>
-              <span className="title">API Docs</span>
-              <span className="sub">Developer tools</span>
-            </a>
-          </nav>
+          <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <nav className="subnav">
+              <a onClick={() => onNavigate('landing')} className={activeTab === 'landing' ? 'active' : ''}>
+                <span className="title">Home</span>
+                <span className="sub">About project</span>
+              </a>
+              <a onClick={() => onNavigate('markets')}    className={activeTab === 'markets'    ? 'active' : ''}>
+                <span className="title">Markets</span>
+                <span className="sub">Browse & bet</span>
+              </a>
+              <a onClick={() => onNavigate('ledger')}     className={activeTab === 'ledger'     ? 'active' : ''}>
+                <span className="title">Ledger</span>
+                <span className="sub">Your bets</span>
+              </a>
+              <a onClick={() => onNavigate('whitepaper')} className={activeTab === 'whitepaper' ? 'active' : ''}>
+                <span className="title">Whitepaper</span>
+                <span className="sub">Tech draft</span>
+              </a>
+            </nav>
+
+            <nav className="subnav-secondary">
+              <a onClick={() => onNavigate('schedule')}   className={activeTab === 'schedule'   ? 'active' : ''}>
+                <span className="title">Schedule</span>
+              </a>
+              <a onClick={() => onNavigate('verdicts')}   className={activeTab === 'verdicts'   ? 'active' : ''}>
+                <span className="title">Verdicts</span>
+              </a>
+              <a onClick={() => onNavigate('accuracy')}   className={activeTab === 'accuracy'   ? 'active' : ''}>
+                <span className="title">Accuracy</span>
+              </a>
+              <a onClick={() => onNavigate('api')}        className={activeTab === 'api'        ? 'active' : ''}>
+                <span className="title">API Docs</span>
+              </a>
+            </nav>
+          </div>
         </div>
       )}
     </header>
