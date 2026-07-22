@@ -28,6 +28,7 @@ export default function Header({
   const isLanding = activeTab === 'landing';
 
   const pageLabel: Record<AppTab, string> = {
+    start:      'START HERE',
     landing:    'HOME',
     markets:    'MARKETS COLUMN',
     dispatch:   'DISPATCH',
@@ -40,6 +41,7 @@ export default function Header({
   };
 
   const pageRight: Record<AppTab, string> = {
+    start:      'Onboarding & Gate',
     landing:    'OKX.AI',
     markets:    '14 Open · Auto-refreshing',
     dispatch:   'Filed 09:14 BST',
@@ -83,6 +85,10 @@ export default function Header({
           <h1 className="display">GAMESORACLE</h1>
           <div className="tagline">"An AI oracle, priced and printed for every medal in Glasgow."</div>
           <nav className="subnav">
+            <a onClick={() => onNavigate('start')} className={activeTab === 'start' ? 'active' : ''}>
+              <span className="title">Start Here</span>
+              <span className="sub">Begin onboarding</span>
+            </a>
             <a onClick={() => onNavigate('markets')} className="live">
               <span className="title">Markets</span>
               <span className="sub">Browse & bet</span>
@@ -126,6 +132,10 @@ export default function Header({
             </div>
           </div>
           <nav className="subnav">
+            <a onClick={() => onNavigate('start')} className={activeTab === 'start' ? 'active' : ''}>
+              <span className="title">Start Here</span>
+              <span className="sub">Begin onboarding</span>
+            </a>
             <a onClick={() => onNavigate('landing')} className={activeTab === 'landing' ? 'active' : ''}>
               <span className="title">Home</span>
               <span className="sub">About project</span>

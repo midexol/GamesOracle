@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import Header   from './components/Header';
 import Landing  from './components/Landing';
+import Start    from './components/Start';
 import Dashboard from './components/Dashboard';
 import MarketDetail from './components/MarketDetail';
 import Ledger   from './components/Ledger';
@@ -40,7 +41,7 @@ const INITIAL_LEDGER: LedgerPosition[] = [
 ];
 
 export default function App(): React.ReactElement {
-  const [activeTab,       setActiveTab]       = useState<AppTab>('landing');
+  const [activeTab,       setActiveTab]       = useState<AppTab>('start');
   const [walletConnected, setWalletConnected] = useState(false);
   const [platformFees,    setPlatformFees]    = useState(184.20);
   const [selectedMarket,  setSelectedMarket]  = useState<Market | null>(null);
@@ -82,6 +83,8 @@ export default function App(): React.ReactElement {
 
   const getOrientationText = () => {
     switch (activeTab) {
+      case 'start':
+        return <>Begin here to complete age/jurisdiction attestation and connect your OKX wallet — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'landing':
         return <>Welcome to GamesOracle AI. Browse live prediction markets or read our agent listing — or <a onClick={() => setShowHowItWorks(true)}>see how it works</a>.</>;
       case 'markets':
@@ -133,6 +136,15 @@ export default function App(): React.ReactElement {
           animate="animate"
           exit="exit"
         >
+          {activeTab === 'start' && (
+            <Start
+              onNavigate={handleNavigate}
+              walletConnected={walletConnected}
+              onConnectWallet={() => setWalletConnected(c => !c)}
+              walletAddress={walletAddress}
+            />
+          )}
+
           {activeTab === 'landing' && (
             <Landing
               onNavigate={handleNavigate}
