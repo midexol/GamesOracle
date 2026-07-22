@@ -18,9 +18,11 @@ const defaultMarket: Market = {
 interface MarketDetailProps {
   selectedMarket: Market | null;
   onAddPosition:  (pos: LedgerPosition) => void;
+  walletConnected: boolean;
+  onConnectWallet: () => void;
 }
 
-export default function MarketDetail({ selectedMarket, onAddPosition }: MarketDetailProps): React.ReactElement {
+export default function MarketDetail({ selectedMarket, onAddPosition, walletConnected, onConnectWallet }: MarketDetailProps): React.ReactElement {
   const market = selectedMarket ?? defaultMarket;
   const [railReady, setRailReady] = useState(false);
 
@@ -127,7 +129,12 @@ export default function MarketDetail({ selectedMarket, onAddPosition }: MarketDe
       </div>
 
       {/* Betting Coupon */}
-      <BettingCoupon market={market} onAddPosition={onAddPosition} />
+      <BettingCoupon
+        market={market}
+        onAddPosition={onAddPosition}
+        walletConnected={walletConnected}
+        onConnectWallet={onConnectWallet}
+      />
 
       <div className="sources">
         <span>Resolution source:</span> Commonwealth Games Federation official results feed · Escrow: X Layer testnet
