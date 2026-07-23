@@ -12,6 +12,7 @@ import Accuracy from './components/Accuracy';
 import ApiDocs  from './components/ApiDocs';
 import type { Market, LedgerPosition, AppTab, ScheduleEvent } from './types';
 import { fetchForecast } from './lib/brain';
+import { connectWallet, onAccountsChanged, shortenAddress } from './lib/wallet';
 
 // ── Page animation variants ───────────────────────────────
 const pageVariants: Variants = {
@@ -42,7 +43,9 @@ const INITIAL_LEDGER: LedgerPosition[] = [
 
 export default function App(): React.ReactElement {
   const [activeTab,       setActiveTab]       = useState<AppTab>('landing');
-  const [walletConnected, setWalletConnected] = useState(false);
+  const [walletAccount,   setWalletAccount]   = useState<string | null>(null);
+  const walletConnected = walletAccount !== null;
+  const [connectError,    setConnectError]    = useState('');
   const [platformFees,    setPlatformFees]    = useState(184.20);
   const [selectedMarket,  setSelectedMarket]  = useState<Market | null>(null);
   const [markets,         setMarkets]         = useState<Market[]>(INITIAL_MARKETS);
@@ -56,12 +59,35 @@ export default function App(): React.ReactElement {
 
   const handleConnectWalletClick = () => {
     if (walletConnected) {
-      setWalletConnected(false);
+      setWalletAccount(null);
       setProfileName('');
     } else {
+      setConnectError('');
       setShowOnboardingModal(true);
     }
   };
+
+  const handleConfirmConnect = async () => {
+    try {
+      setConnectError('');
+      const address = await connectWallet();
+      setWalletAccount(address);
+      if (displayNameInput.trim()) {
+        setProfileName(displayNameInput.trim());
+      }
+      setShowOnboardingModal(false);
+    } catch (err) {
+      setConnectError(err instanceof Error ? err.message : 'Wallet connection failed.');
+    }
+  };
+
+  // Stay in sync if the user switches or disconnects accounts from within
+  // the wallet extension itself, rather than through this app's own button.
+  useEffect(() => {
+    return onAccountsChanged((accounts) => {
+      setWalletAccount(accounts[0] ?? null);
+    });
+  }, []);
 
   // Live fee accumulation
   useEffect(() => {
@@ -130,7 +156,7 @@ export default function App(): React.ReactElement {
     }
   };
 
-  const walletAddress = '0x4F…9aC1';
+  const walletAddress = walletAccount ? shortenAddress(walletAccount) : '';
 
   return (
     <div>
@@ -280,14 +306,13 @@ export default function App(): React.ReactElement {
               </div>
 
               {/* Connect Button */}
+              {connectError && (
+                <p style={{ fontSize: '11.5px', color: 'var(--red)', margin: '0 0 12px' }}>
+                  {connectError}
+                </p>
+              )}
               <button
-                onClick={() => {
-                  setWalletConnected(true);
-                  if (displayNameInput.trim()) {
-                    setProfileName(displayNameInput.trim());
-                  }
-                  setShowOnboardingModal(false);
-                }}
+                onClick={handleConfirmConnect}
                 disabled={!hasAgreedOnboarding}
                 className="wallet-btn hard-shadow-sm"
                 style={{
