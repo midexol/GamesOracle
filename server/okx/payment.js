@@ -27,8 +27,13 @@ export function buildChallenge(req, feeUsdt, description) {
 
 // Hackathon scope: verifies only that a payment header was presented, not that
 // it settled on-chain. Real settlement verification is a follow-up task.
+//
+// DEMO_FREE_MODE: temporary override for demo recording while the treasury
+// wallet has no funded counterparty to test real settlement. Matches the
+// fee "0" temporarily set on the OKX listing itself — revert both together.
 export function requirePayment(feeUsdt, description) {
   return (req, res, next) => {
+    if (process.env.DEMO_FREE_MODE === 'true') return next();
     const paymentHeader = req.headers['x-payment'];
     if (!paymentHeader) {
       return res.status(402).json(buildChallenge(req, feeUsdt, description));
