@@ -30,10 +30,11 @@ export function buildChallenge(req, feeUsdt, description) {
 //
 // DEMO_FREE_MODE: temporary override for demo recording while the treasury
 // wallet has no funded counterparty to test real settlement. Matches the
-// fee "0" temporarily set on the OKX listing itself — revert both together.
+// fee "0" temporarily set on the OKX listing itself. Defaults ON (no env var
+// needed — deploy access is push-only) — flip to 'false' and push to revert.
 export function requirePayment(feeUsdt, description) {
   return (req, res, next) => {
-    if (process.env.DEMO_FREE_MODE === 'true') return next();
+    if (process.env.DEMO_FREE_MODE !== 'false') return next();
     const paymentHeader = req.headers['x-payment'];
     if (!paymentHeader) {
       return res.status(402).json(buildChallenge(req, feeUsdt, description));
