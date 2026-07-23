@@ -1473,15 +1473,22 @@ table.box td.ai {
   
   .layout {
     grid-template-columns: 1fr;
+    padding: 0 12px 40px;
   }
-  
+
   .main-col {
     border-right: none;
     padding-right: 0;
+    /* Grid items default to min-width:auto, which refuses to shrink below
+       the intrinsic content width — this was forcing the whole column (and
+       the page) wider than the viewport instead of letting .filters'
+       own overflow-x:auto contain the sport-chip row's overflow. */
+    min-width: 0;
   }
-  
+
   .side-col {
     padding-left: 0;
+    min-width: 0;
   }
   
   .sections {
@@ -1547,6 +1554,14 @@ table.box td.ai {
   grid-template-columns: 240px 1fr;
   gap: 48px;
   align-items: start;
+}
+
+/* Grid items default to min-width:auto, which refuses to shrink below the
+   intrinsic content width — <pre> code blocks (ApiDocs) have no wrap, so
+   without this the whole grid (and page) got forced wider than the
+   viewport instead of the <pre>'s own overflow-x:auto containing it. */
+.whitepaper-grid > * {
+  min-width: 0;
 }
 
 .whitepaper-sidebar {
@@ -1785,7 +1800,7 @@ table.box td.ai {
   }
 
   /* Compact top masthead on mobile */
-  .masthead, .masthead.center-mode {
+  .masthead {
     padding: 8px 12px !important;
     display: flex !important;
     flex-direction: row !important;
@@ -1795,10 +1810,29 @@ table.box td.ai {
     text-align: left !important;
   }
 
+  /* Landing masthead has a flat structure (h1, tagline, subnav, subnav-secondary
+     all as siblings) unlike other pages' two-column layout — it needs to stack
+     as rows instead of squeezing everything into one flex row, which was
+     collapsing nav.subnav to near-zero width and making its links unclickable. */
+  .masthead.center-mode {
+    padding: 8px 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 4px !important;
+    text-align: left !important;
+  }
+
   .masthead h1, .masthead.center-mode h1 {
     font-size: 18px !important;
     margin: 0 !important;
     line-height: 1 !important;
+  }
+
+  .masthead.center-mode nav.subnav,
+  .masthead.center-mode nav.subnav-secondary {
+    justify-content: flex-start !important;
+    margin-top: 0 !important;
   }
 
   /* Compact button styling on mobile top-right */
@@ -1841,6 +1875,31 @@ table.box td.ai {
 
   nav.subnav a .title {
     font-size: 11px;
+  }
+
+  /* Secondary sub-navigation gets the same horizontal-scroll treatment —
+     otherwise its 4 items overflow the row uncontained (flexbox default
+     nowrap) and squeeze/overlap whatever sits next to it. */
+  nav.subnav-secondary {
+    gap: 14px;
+    overflow-x: auto;
+    width: 100%;
+    padding: 2px 0;
+    margin-top: 4px !important;
+    border-top: none !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+  }
+  nav.subnav-secondary::-webkit-scrollbar {
+    display: none;
+  }
+  nav.subnav-secondary a {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  nav.subnav-secondary a .title {
+    font-size: 10px;
   }
 
   /* Page margins and spacing */
